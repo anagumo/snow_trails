@@ -8,8 +8,13 @@
 import Foundation
 
 class App {
+    let menuController: MenuController
+    
+    init() {
+        menuController = MenuController()
+    }
     
     func run() {
-        print("Bienvenido a Snowtrails")
+        menuController.displayMenu(.Login)
     }
 }
