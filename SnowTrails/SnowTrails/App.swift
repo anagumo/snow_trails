@@ -8,17 +8,15 @@
 import Foundation
 
 class App {
-    var menuController: MenuController?
+    var menuController: MenuController
+    var loginController: LoginController
     
     init() {
-        menuController = MenuController()
-    }
-    
-    deinit {
-        menuController = nil
+        loginController = LoginController()
+        menuController = MenuController(loginController: loginController)
     }
     
     func run() {
-        menuController?.displayMainMenu()
+        menuController.build()
     }
 }

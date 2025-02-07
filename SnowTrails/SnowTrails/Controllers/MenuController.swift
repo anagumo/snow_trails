@@ -7,26 +7,32 @@
 
 import Foundation
 
-class MenuController: MenuDelegate {
-    var menu: Menu?
+protocol MenuControllerImplementation {
+    func build()
+}
+
+class MenuController: MenuControllerImplementation, MenuDelegate {
+    private var menu: Menu?
+    private var loginController: LoginController
     
-    init() {
-        menu = Menu(menuDelegate: self)
+    init(loginController: LoginController) {
+        self.loginController = loginController
+        menu = Menu(type: .Login, menuDelegate: self)
     }
     
     deinit {
         menu = nil
     }
     
-    // MARK: Main Logic
-    func displayMainMenu() {
+    // MARK: Main
+    func build() {
         // TODO: Validate user session to display the correct menu
         menu?.getMenu(.Login)
     }
     
     // MARK: Delegate functions
     func displayLoginMenu(textMenu: String) {
-        print(textMenu)
+        loginController.displayMenu(textMenu: textMenu)
     }
     
     func displayUserMenu(textMenu: String) {
