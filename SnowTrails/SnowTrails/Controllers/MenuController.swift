@@ -19,8 +19,9 @@ class MenuController: MenuDelegate {
     }
     
     // MARK: Main Logic
-    func displayMenu(_ type: MenuType) {
-        menu?.getMenu(type)
+    func displayMainMenu() {
+        // TODO: Validate user session to display the correct menu
+        menu?.getMenu(.Login)
     }
     
     // MARK: Delegate functions

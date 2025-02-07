@@ -29,8 +29,8 @@
 			membershipExceptions = (
 				App.swift,
 				Controllers/MenuController.swift,
+				DataSource/Models/Menu.swift,
 				main.swift,
-				Models/Menu.swift,
 			);
 			target = C3380CD32D553AE00001DCC8 /* SnowTrailsTesting */;
 		};
