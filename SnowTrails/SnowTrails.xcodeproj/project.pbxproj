@@ -27,7 +27,9 @@
 		C3380D002D553BBD0001DCC8 /* Exceptions for "SnowTrails" folder in "SnowTrailsTesting" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App.swift,
 				main.swift,
+				Models/Menu.swift,
 			);
 			target = C3380CD32D553AE00001DCC8 /* SnowTrailsTesting */;
 		};

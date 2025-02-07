@@ -13,6 +13,7 @@ class Main {
     
     // MARK: Main
     func main() {
-        // TODO: Run the app here
+        let app = App()
+        app.run()
     }
 }
