@@ -79,7 +79,7 @@ enum LoginOption: String, CaseIterable {
     case LoginAdmin = "Acceder como administrador"
     case Quit = "Salir"
     
-    init?(from input: String) {
+    init?(from input: String?) {
         switch input {
         case "1":
             self = .LoginUser

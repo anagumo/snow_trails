@@ -8,11 +8,13 @@
 import Foundation
 
 class App {
-    var menuController: MenuController
-    var loginController: LoginController
+    private var menuController: MenuControllerImplementation
+    private var loginController: LoginControllerImplementation
+    private var loginService: LoginServiceImplementation
     
     init() {
-        loginController = LoginController()
+        loginService = LoginService()
+        loginController = LoginController(loginService: loginService)
         menuController = MenuController(loginController: loginController)
     }
     

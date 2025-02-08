@@ -13,9 +13,9 @@ protocol MenuControllerImplementation {
 
 class MenuController: MenuControllerImplementation, MenuDelegate {
     private var menu: Menu?
-    private var loginController: LoginController
+    private var loginController: LoginControllerImplementation
     
-    init(loginController: LoginController) {
+    init(loginController: LoginControllerImplementation) {
         self.loginController = loginController
         menu = Menu(type: .Login, menuDelegate: self)
     }
