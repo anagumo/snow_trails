@@ -48,6 +48,6 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     // MARK: Login Delegate functions
     func closeLoginMenu() {
-        print("Delegate called")
+        //menu?.getMenu(.User) Crash: Simultaneous accesses to 0x600002664080, but modification requires exclusive access
     }
 }
