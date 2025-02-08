@@ -9,10 +9,16 @@ import Foundation
 
 protocol LoginControllerImplementation {
     func displayMenu(textMenu: String)
+    var loginControllerDelegate: LoginControllerDelegate? { get set }
+}
+
+protocol LoginControllerDelegate: AnyObject { // The compiler requieres this protocol (?)
+    func closeLoginMenu()
 }
 
 class LoginController: LoginControllerImplementation {
     private let loginService: LoginServiceImplementation
+    weak var loginControllerDelegate: LoginControllerDelegate?
     private var loginOption: LoginOption?
     
     init(loginService: LoginServiceImplementation) {
@@ -22,6 +28,7 @@ class LoginController: LoginControllerImplementation {
     
     deinit {
         loginOption = nil
+        loginControllerDelegate = nil
     }
     
     func displayMenu(textMenu: String) {
@@ -54,6 +61,8 @@ class LoginController: LoginControllerImplementation {
         
         loginService.getUser(emailInput: emailInput, passwordInput: passwordInput) { userMessage in
             print(userMessage)
+            loginControllerDelegate?.closeLoginMenu()
+            loginOption = .Quit
         } onError: { errorMessage in
             // TODO: Complemetary - Handle Login error
             print(errorMessage)

@@ -11,7 +11,7 @@ protocol MenuControllerImplementation {
     func build()
 }
 
-class MenuController: MenuControllerImplementation, MenuDelegate {
+class MenuController: MenuControllerImplementation {
     private var menu: Menu?
     private var loginController: LoginControllerImplementation
     
@@ -27,10 +27,13 @@ class MenuController: MenuControllerImplementation, MenuDelegate {
     // MARK: Main
     func build() {
         // TODO: Validate user session to display the correct menu
+        loginController.loginControllerDelegate = self
         menu?.getMenu(.Login)
     }
-    
-    // MARK: Delegate functions
+}
+
+extension MenuController: MenuDelegate, LoginControllerDelegate {
+    // MARK: Menu Delegate functions
     func displayLoginMenu(textMenu: String) {
         loginController.displayMenu(textMenu: textMenu)
     }
@@ -41,5 +44,10 @@ class MenuController: MenuControllerImplementation, MenuDelegate {
     
     func displayAdminMenu(textMenu: String) {
         print(textMenu)
+    }
+    
+    // MARK: Login Delegate functions
+    func closeLoginMenu() {
+        print("Delegate called")
     }
 }
