@@ -14,9 +14,11 @@ protocol MenuControllerImplementation {
 class MenuController: MenuControllerImplementation {
     private var menu: Menu?
     private var loginController: LoginControllerImplementation
+    private var regularUserController: RegularUserControllerImplementation
     
-    init(loginController: LoginControllerImplementation) {
+    init(loginController: LoginControllerImplementation, regularUserController: RegularUserControllerImplementation) {
         self.loginController = loginController
+        self.regularUserController = regularUserController
         menu = Menu(menuDelegate: self)
     }
     
@@ -38,7 +40,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     }
     
     func displayUserMenu(textMenu: String) {
-        print(textMenu)
+        regularUserController.displayMenu(texMenu: textMenu)
     }
     
     func displayAdminMenu(textMenu: String) {
@@ -49,7 +51,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     func onLoginSuccess(user: User) {
         switch user.role {
         case .regular:
-            print("Display regular user menu")
+            menu?.getMenu(.RegularUser)
         case .admin:
             print("Display admin user menu")
         default:

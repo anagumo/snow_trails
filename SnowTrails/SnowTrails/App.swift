@@ -8,16 +8,18 @@
 import Foundation
 
 class App {
-    private var menuController: MenuControllerImplementation
-    private var loginController: LoginControllerImplementation
-    private var loginService: LoginServiceImplementation
     private var userDataLoader: UserDataLoader
+    private var loginService: LoginServiceImplementation
+    private var loginController: LoginControllerImplementation
+    private var regularUserController: RegularUserControllerImplementation
+    private var menuController: MenuControllerImplementation
     
     init() {
         userDataLoader = UserDataLoader()
         loginService = LoginService(userDataLoader: userDataLoader)
         loginController = LoginController(loginService: loginService)
-        menuController = MenuController(loginController: loginController)
+        regularUserController = RegularUserController()
+        menuController = MenuController(loginController: loginController, regularUserController: regularUserController)
     }
     
     func run() {

@@ -24,8 +24,8 @@ struct Menu: MenuImplementation {
         switch menuType {
         case .Login:
             displayLoginMenu()
-        case .User:
-            displayUserMenu()
+        case .RegularUser:
+            displayRegularUserMenu()
         case .Admin:
             displayAdminMenu()
         }
@@ -42,8 +42,8 @@ struct Menu: MenuImplementation {
         menuDelegate?.displayLoginMenu(textMenu: textMenu)
     }
     
-    func displayUserMenu() {
-        let textMenu = UserOption.allCases
+    func displayRegularUserMenu() {
+        let textMenu = RegularUserOption.allCases
             .enumerated()
             .reduce("👩🏻‍💻 Menú usuario - Selecciona una opción:\n") {
                 let (index, option) = $1
@@ -67,7 +67,7 @@ struct Menu: MenuImplementation {
 
 enum MenuType {
     case Login
-    case User
+    case RegularUser
     case Admin
 }
 
@@ -90,12 +90,12 @@ enum LoginOption: String, CaseIterable {
     }
 }
 
-enum UserOption: String, CaseIterable {
+enum RegularUserOption: String, CaseIterable {
     case Routes = "Ver todas las rutas"
     case ShortRoute = "Obtener la ruta más corta entre dos puntos"
     case Logout = "Cerrar sesión"
     
-    init?(from input: String) {
+    init?(from input: String?) {
         switch input {
         case "1":
             self = .Routes

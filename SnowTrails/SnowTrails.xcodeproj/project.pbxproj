@@ -30,6 +30,7 @@
 				App.swift,
 				Controllers/LoginController.swift,
 				Controllers/MenuController.swift,
+				Controllers/RegularUserController.swift,
 				DataSource/Models/Menu.swift,
 				DataSource/Models/User.swift,
 				DataSource/UserDataLoader.swift,
