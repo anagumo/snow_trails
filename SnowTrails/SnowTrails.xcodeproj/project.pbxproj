@@ -32,8 +32,10 @@
 				Controllers/MenuController.swift,
 				DataSource/Models/Menu.swift,
 				DataSource/Models/User.swift,
+				DataSource/UserDataLoader.swift,
 				DataSource/users.json,
 				main.swift,
+				Services/LoginService.swift,
 			);
 			target = C3380CD32D553AE00001DCC8 /* SnowTrailsTesting */;
 		};

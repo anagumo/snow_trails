@@ -54,4 +54,10 @@ class UserDataLoader {
             return nil
         }
     }
+    
+    func getUser(emailInput: String, passwordInput: String) -> User? {
+        users.filter { user in
+            user.email == emailInput && user.password == passwordInput
+        }.first
+    }
 }
