@@ -31,11 +31,12 @@ class MenuController: MenuControllerImplementation {
     // MARK: Main
     func build() {
         loginController.loginControllerDelegate = self
+        regularUserController.regularUserControllerDelegate = self
         menu?.getMenu(.Login)
     }
 }
 
-extension MenuController: MenuDelegate, LoginControllerDelegate {
+extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserControllerDelegate {
     // MARK: Menu Delegate functions
     func displayLoginMenu(textMenu: String) {
         loginController.displayMenu(textMenu: textMenu)
@@ -65,5 +66,11 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
             // TODO: Complementary - Handle error
             print("Tipo de usuario no identificado")
         }
+    }
+    
+    // MARK: User Delegate functions
+    func onLogoutSuccess() {
+        user = nil
+        menu?.getMenu(.Login)
     }
 }

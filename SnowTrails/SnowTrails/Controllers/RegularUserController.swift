@@ -9,18 +9,24 @@ import Foundation
 
 protocol RegularUserControllerImplementation {
     func displayMenu(texMenu: String, user: User)
+    var regularUserControllerDelegate: RegularUserControllerDelegate? { get set }
+}
+
+protocol RegularUserControllerDelegate: AnyObject {
+    func onLogoutSuccess()
 }
 
 class RegularUserController: RegularUserControllerImplementation {
     private var userService: UserService
+    weak var regularUserControllerDelegate: RegularUserControllerDelegate?
     private var regularUserOption: RegularUserOption?
     
     init(userService: UserService) {
         self.userService = userService
-        regularUserOption = nil
     }
     
     deinit {
+        regularUserControllerDelegate = nil
         regularUserOption = nil
     }
     
@@ -39,6 +45,7 @@ class RegularUserController: RegularUserControllerImplementation {
                 case .Logout:
                     userService.logout(userId: user.id) { onSuccessMessage in
                         print(onSuccessMessage)
+                        regularUserControllerDelegate?.onLogoutSuccess()
                     } onError: { errorMessage in
                         print(errorMessage)
                     }
