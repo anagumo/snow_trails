@@ -56,8 +56,24 @@ class UserDataLoader {
     }
     
     func login(emailInput: String, passwordInput: String) -> User? {
+        updateSession {
+            $0.email == emailInput && $0.password == passwordInput
+        } completion: {
+            $0.isLoggedIn
+        }
+    }
+    
+    func logout(userId: String) -> User? {
+        updateSession {
+            $0.id == userId
+        } completion: {
+            $0.id == userId
+        }
+    }
+    
+    private func updateSession(predicate: (User) -> Bool, completion: (User) -> Bool) -> User? {
         users = users.compactMap {
-            guard $0.email == emailInput && $0.password == passwordInput else {
+            guard predicate($0) else {
                 return $0
             }
             
@@ -67,23 +83,7 @@ class UserDataLoader {
         }
         
         return users.first {
-            $0.isLoggedIn
+            completion($0)
         }
-    }
-    
-    func logout(userId: String) -> User? {
-        users = users.compactMap {
-            guard $0.id == userId else {
-                return $0
-            }
-            
-            var user = $0
-            user.isLoggedIn.toggle()
-            return user
-        }
-        
-        return users.first(where: {
-            $0.id == userId
-        })
     }
 }
