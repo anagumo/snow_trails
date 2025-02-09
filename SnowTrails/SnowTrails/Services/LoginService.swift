@@ -8,24 +8,30 @@
 import Foundation
 
 protocol LoginServiceImplementation {
-    func getUser(emailInput: String, passwordInput: String, onSuccess: (String) -> (), onError: (String) -> ())
+    func getUser(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ())
 }
 
 class LoginService: LoginServiceImplementation {
+    private let userDataLoader: UserDataLoader
+    private let users: [User]
     
-    func getUser(emailInput: String, passwordInput: String, onSuccess: (String) -> (), onError: (String) -> ()) {
-        let regularUser = User(id: "1",
-                               username: "Regularuserkeepcoding1",
-                               email: "regularuser@keepcoding.es",
-                               password: "Regularuser1",
-                               role: .regular,
-                               isLogged: false)
-        
-        guard emailInput == regularUser.email && passwordInput == regularUser.password else {
+    init(userDataLoader: UserDataLoader) {
+        self.userDataLoader = userDataLoader
+        users = userDataLoader.users
+    }
+    
+    func getUser(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
+        guard let user = getUser(emailInput: emailInput, passwordInput: passwordInput) else {
             onError("Ocurrió un error al iniciar sesión.\n")
             return
         }
         
-        onSuccess("Has iniciado sesión correctamente como \(regularUser.username).\n")
+        onSuccess(user.getLoginMessage(), user)
+    }
+    
+    private func getUser(emailInput: String, passwordInput: String) -> User? {
+        users.filter { user in
+            user.email == emailInput && user.password == passwordInput
+        }.first
     }
 }

@@ -26,7 +26,6 @@ class MenuController: MenuControllerImplementation {
     
     // MARK: Main
     func build() {
-        // TODO: Validate user session to display the correct menu
         loginController.loginControllerDelegate = self
         menu?.getMenu(.Login)
     }
@@ -47,7 +46,15 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     }
     
     // MARK: Login Delegate functions
-    func closeLoginMenu() {
-        menu?.getMenu(.User)
+    func onLoginSuccess(user: User) {
+        switch user.role {
+        case .regular:
+            print("Display regular user menu")
+        case .admin:
+            print("Display admin user menu")
+        default:
+            // TODO: Complementary - Handle error
+            print("Tipo de usuario no identificado")
+        }
     }
 }

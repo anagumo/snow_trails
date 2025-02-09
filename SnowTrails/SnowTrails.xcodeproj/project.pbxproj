@@ -9,12 +9,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		C3380CC42D553A970001DCC8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = DataSource/users;
+			dstSubfolderSpec = 7;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -32,16 +32,31 @@
 				Controllers/MenuController.swift,
 				DataSource/Models/Menu.swift,
 				DataSource/Models/User.swift,
+				DataSource/users.json,
 				main.swift,
 			);
 			target = C3380CD32D553AE00001DCC8 /* SnowTrailsTesting */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		C3E097F62D58441B00B2344A /* Exceptions for "SnowTrails" folder in "Copy Files" phase from "SnowTrails" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				DataSource/users.json = (CodeSignOnCopy, );
+			};
+			buildPhase = C3380CC42D553A970001DCC8 /* CopyFiles */;
+			membershipExceptions = (
+				DataSource/users.json,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C3380CC82D553A970001DCC8 /* SnowTrails */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				C3E097F62D58441B00B2344A /* Exceptions for "SnowTrails" folder in "Copy Files" phase from "SnowTrails" target */,
 				C3380D002D553BBD0001DCC8 /* Exceptions for "SnowTrails" folder in "SnowTrailsTesting" target */,
 			);
 			path = SnowTrails;

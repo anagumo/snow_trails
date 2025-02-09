@@ -13,7 +13,7 @@ protocol LoginControllerImplementation {
 }
 
 protocol LoginControllerDelegate: AnyObject { // The compiler requieres this protocol (?)
-    func closeLoginMenu()
+    func onLoginSuccess(user: User)
 }
 
 class LoginController: LoginControllerImplementation {
@@ -59,9 +59,9 @@ class LoginController: LoginControllerImplementation {
         print("Ingresa tu contraseña: ")
         let passwordInput = readLine() ?? ""
         
-        loginService.getUser(emailInput: emailInput, passwordInput: passwordInput) { userMessage in
-            print(userMessage)
-            loginControllerDelegate?.closeLoginMenu()
+        loginService.getUser(emailInput: emailInput, passwordInput: passwordInput) { successMessage, user in
+            print(successMessage)
+            loginControllerDelegate?.onLoginSuccess(user: user)
             loginOption = .Quit
         } onError: { errorMessage in
             // TODO: Complemetary - Handle Login error

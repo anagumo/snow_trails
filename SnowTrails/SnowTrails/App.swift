@@ -11,9 +11,11 @@ class App {
     private var menuController: MenuControllerImplementation
     private var loginController: LoginControllerImplementation
     private var loginService: LoginServiceImplementation
+    private var userDataLoader: UserDataLoader
     
     init() {
-        loginService = LoginService()
+        userDataLoader = UserDataLoader()
+        loginService = LoginService(userDataLoader: userDataLoader)
         loginController = LoginController(loginService: loginService)
         menuController = MenuController(loginController: loginController)
     }
