@@ -37,6 +37,7 @@
 				DataSource/users.json,
 				main.swift,
 				Services/LoginService.swift,
+				Services/UserService.swift,
 			);
 			target = C3380CD32D553AE00001DCC8 /* SnowTrailsTesting */;
 		};

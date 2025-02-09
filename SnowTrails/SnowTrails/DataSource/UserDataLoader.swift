@@ -55,15 +55,9 @@ class UserDataLoader {
         }
     }
     
-    func getUser(emailInput: String, passwordInput: String) -> User? {
-        users.filter { user in
-            user.email == emailInput && user.password == passwordInput
-        }.first
-    }
-    
-    func updateUser(_ user: User) {
+    func login(emailInput: String, passwordInput: String) -> User? {
         users = users.compactMap {
-            guard $0.id == user.id else {
+            guard $0.email == emailInput && $0.password == passwordInput else {
                 return $0
             }
             
@@ -71,5 +65,25 @@ class UserDataLoader {
             user.isLoggedIn.toggle()
             return user
         }
+        
+        return users.first {
+            $0.isLoggedIn
+        }
+    }
+    
+    func logout(userId: String) -> User? {
+        users = users.compactMap {
+            guard $0.id == userId else {
+                return $0
+            }
+            
+            var user = $0
+            user.isLoggedIn.toggle()
+            return user
+        }
+        
+        return users.first(where: {
+            $0.id == userId
+        })
     }
 }

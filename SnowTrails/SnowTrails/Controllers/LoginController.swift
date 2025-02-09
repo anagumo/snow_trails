@@ -40,7 +40,7 @@ class LoginController: LoginControllerImplementation {
                 
                 switch loginOption {
                 case .LoginUser, .LoginAdmin:
-                    getUser()
+                    login()
                 case .Quit:
                     break
                 }
@@ -51,7 +51,7 @@ class LoginController: LoginControllerImplementation {
         }
     }
     
-    private func getUser() {
+    private func login() {
         // TODO: Complementary - validate user credentials and role
         print("Ingresa tu email: ")
         let emailInput = readLine() ?? ""
@@ -59,7 +59,7 @@ class LoginController: LoginControllerImplementation {
         print("Ingresa tu contraseña: ")
         let passwordInput = readLine() ?? ""
         
-        loginService.getUser(emailInput: emailInput, passwordInput: passwordInput) { successMessage, user in
+        loginService.login(emailInput: emailInput, passwordInput: passwordInput) { successMessage, user in
             print(successMessage)
             loginControllerDelegate?.onLoginSuccess(user: user)
             loginOption = .Quit

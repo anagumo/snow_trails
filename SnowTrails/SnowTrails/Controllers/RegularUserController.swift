@@ -8,13 +8,15 @@
 import Foundation
 
 protocol RegularUserControllerImplementation {
-    func displayMenu(texMenu: String)
+    func displayMenu(texMenu: String, user: User)
 }
 
 class RegularUserController: RegularUserControllerImplementation {
+    private var userService: UserService
     private var regularUserOption: RegularUserOption?
     
-    init() {
+    init(userService: UserService) {
+        self.userService = userService
         regularUserOption = nil
     }
     
@@ -22,7 +24,7 @@ class RegularUserController: RegularUserControllerImplementation {
         regularUserOption = nil
     }
     
-    func displayMenu(texMenu: String) {
+    func displayMenu(texMenu: String, user: User) {
         while regularUserOption == nil {
             print(texMenu)
             
@@ -35,7 +37,11 @@ class RegularUserController: RegularUserControllerImplementation {
                 case .ShortRoute:
                     print("Esta funcionalidad no está implementada")
                 case .Logout:
-                    print("Cerrar sesión")
+                    userService.logout(userId: user.id) { onSuccessMessage in
+                        print(onSuccessMessage)
+                    } onError: { errorMessage in
+                        print(errorMessage)
+                    }
                 }
             } else {
                 //TODO: Complementary - Handle Menu error

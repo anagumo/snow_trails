@@ -11,6 +11,7 @@ class App {
     private var userDataLoader: UserDataLoader
     private var loginService: LoginServiceImplementation
     private var loginController: LoginControllerImplementation
+    private var userService: UserService
     private var regularUserController: RegularUserControllerImplementation
     private var menuController: MenuControllerImplementation
     
@@ -18,7 +19,8 @@ class App {
         userDataLoader = UserDataLoader()
         loginService = LoginService(userDataLoader: userDataLoader)
         loginController = LoginController(loginService: loginService)
-        regularUserController = RegularUserController()
+        userService = UserService(userDataLoader: userDataLoader)
+        regularUserController = RegularUserController(userService: userService)
         menuController = MenuController(loginController: loginController, regularUserController: regularUserController)
     }
     

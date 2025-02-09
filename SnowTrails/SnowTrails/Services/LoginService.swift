@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginServiceImplementation {
-    func getUser(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ())
+    func login(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ())
 }
 
 class LoginService: LoginServiceImplementation {
@@ -18,13 +18,12 @@ class LoginService: LoginServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
-    func getUser(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
-        guard let user = userDataLoader.getUser(emailInput: emailInput, passwordInput: passwordInput) else {
+    func login(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
+        guard let user = userDataLoader.login(emailInput: emailInput, passwordInput: passwordInput) else {
             onError("Ocurrió un error al iniciar sesión.\n")
             return
         }
         
-        userDataLoader.updateUser(user)
         onSuccess(user.getLoginMessage(), user)
     }
 }

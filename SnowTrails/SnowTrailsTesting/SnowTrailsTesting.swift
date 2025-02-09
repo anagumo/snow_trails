@@ -24,28 +24,25 @@ class SnowTrailsTesting {
             testData = nil
         }
         
-        @Test func getUserError() async throws {
-            let userLoaded = userDataLoader.getUser(emailInput: "ari@keepcoding.es", passwordInput: "Regularuser2")
+        @Test func loginError() async throws {
+            let userLoaded = userDataLoader.login(emailInput: "ari@keepcoding.es", passwordInput: "Regularuser2")
             #expect(userLoaded == nil, "It is expected that the user is not in the data source")
         }
         
-        @Test func getUserSuccess() async throws {
-            let userLoaded = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1")
+        @Test func loginSuccess() async throws {
+            let userLoaded = userDataLoader.login(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1")
             #expect(userLoaded != nil, "It is expected that the user is in the data source")
         }
         
-        @Test func updateUserSession() async throws {
-            guard let userLoaded = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
+        @Test func logoutSuccess() async throws {
+            guard let userLoggedIn = userDataLoader.login(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
+                return
+            }
+            guard let userLoggedOut = userDataLoader.logout(userId: userLoggedIn.id) else {
                 return
             }
             
-            userDataLoader.updateUser(userLoaded)
-            
-            guard let userUpdated = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
-                return
-            }
-            
-            #expect(userUpdated.isLoggedIn, "It is expected that the user is logged in")
+            #expect(userLoggedOut.isLoggedIn == false, "It is expected that the user is logged out")
         }
     }
 }

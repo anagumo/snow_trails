@@ -15,6 +15,7 @@ class MenuController: MenuControllerImplementation {
     private var menu: Menu?
     private var loginController: LoginControllerImplementation
     private var regularUserController: RegularUserControllerImplementation
+    private var user: User?
     
     init(loginController: LoginControllerImplementation, regularUserController: RegularUserControllerImplementation) {
         self.loginController = loginController
@@ -24,6 +25,7 @@ class MenuController: MenuControllerImplementation {
     
     deinit {
         menu = nil
+        user = nil
     }
     
     // MARK: Main
@@ -40,7 +42,10 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     }
     
     func displayUserMenu(textMenu: String) {
-        regularUserController.displayMenu(texMenu: textMenu)
+        guard let user else {
+            return
+        }
+        regularUserController.displayMenu(texMenu: textMenu, user: user)
     }
     
     func displayAdminMenu(textMenu: String) {
@@ -49,6 +54,8 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     // MARK: Login Delegate functions
     func onLoginSuccess(user: User) {
+        self.user = user
+        
         switch user.role {
         case .regular:
             menu?.getMenu(.RegularUser)
