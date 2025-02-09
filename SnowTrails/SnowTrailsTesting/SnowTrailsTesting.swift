@@ -33,5 +33,19 @@ class SnowTrailsTesting {
             let userLoaded = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1")
             #expect(userLoaded != nil, "It is expected that the user is in the data source")
         }
+        
+        @Test func updateUserSession() async throws {
+            guard let userLoaded = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
+                return
+            }
+            
+            userDataLoader.updateUser(userLoaded)
+            
+            guard let userUpdated = userDataLoader.getUser(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
+                return
+            }
+            
+            #expect(userUpdated.isLoggedIn, "It is expected that the user is logged in")
+        }
     }
 }

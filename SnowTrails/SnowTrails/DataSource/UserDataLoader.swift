@@ -60,4 +60,16 @@ class UserDataLoader {
             user.email == emailInput && user.password == passwordInput
         }.first
     }
+    
+    func updateUser(_ user: User) {
+        users = users.compactMap {
+            guard $0.id == user.id else {
+                return $0
+            }
+            
+            var user = $0
+            user.isLoggedIn.toggle()
+            return user
+        }
+    }
 }

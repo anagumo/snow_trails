@@ -24,6 +24,7 @@ class LoginService: LoginServiceImplementation {
             return
         }
         
+        userDataLoader.updateUser(user)
         onSuccess(user.getLoginMessage(), user)
     }
 }

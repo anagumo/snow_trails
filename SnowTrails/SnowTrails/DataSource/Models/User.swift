@@ -37,7 +37,7 @@ struct User: Codable, Hashable {
     let email: String
     let password: String
     let role: UserType? // From Complementary
-    let isLoggedIn: Bool
+    var isLoggedIn: Bool
     
     static func == (lhs: User, rhs: User) -> Bool {
         lhs.id == rhs.id
