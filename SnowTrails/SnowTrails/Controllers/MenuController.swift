@@ -17,7 +17,7 @@ class MenuController: MenuControllerImplementation {
     
     init(loginController: LoginControllerImplementation) {
         self.loginController = loginController
-        menu = Menu(type: .Login, menuDelegate: self)
+        menu = Menu(menuDelegate: self)
     }
     
     deinit {
@@ -48,6 +48,6 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     // MARK: Login Delegate functions
     func closeLoginMenu() {
-        //menu?.getMenu(.User) Crash: Simultaneous accesses to 0x600002664080, but modification requires exclusive access
+        menu?.getMenu(.User)
     }
 }

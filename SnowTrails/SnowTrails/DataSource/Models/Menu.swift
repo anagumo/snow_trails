@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MenuImplementation {
-    mutating func getMenu(_ menuType: MenuType)
+    func getMenu(_ menuType: MenuType)
 }
 
 protocol MenuDelegate {
@@ -18,12 +18,9 @@ protocol MenuDelegate {
 }
 
 struct Menu: MenuImplementation {
-    var type: MenuType
     var menuDelegate: MenuDelegate?
     
-    mutating func getMenu(_ menuType: MenuType) {
-        type = menuType
-        
+    func getMenu(_ menuType: MenuType) {
         switch menuType {
         case .Login:
             displayLoginMenu()
