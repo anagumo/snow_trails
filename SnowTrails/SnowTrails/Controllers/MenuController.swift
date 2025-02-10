@@ -8,13 +8,13 @@
 import Foundation
 
 protocol MenuControllerImplementation {
-    func build()
+    func open()
 }
 
 class MenuController: MenuControllerImplementation {
-    private var menu: Menu?
     private var loginController: LoginControllerImplementation
     private var regularUserController: RegularUserControllerImplementation
+    private var menu: Menu?
     private var user: User?
     
     init(loginController: LoginControllerImplementation, regularUserController: RegularUserControllerImplementation) {
@@ -29,7 +29,7 @@ class MenuController: MenuControllerImplementation {
     }
     
     // MARK: Main
-    func build() {
+    func open() {
         loginController.loginControllerDelegate = self
         regularUserController.regularUserControllerDelegate = self
         menu?.getMenu(.Login)
@@ -39,7 +39,7 @@ class MenuController: MenuControllerImplementation {
 extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserControllerDelegate {
     // MARK: Menu Delegate functions
     func displayLoginMenu(textMenu: String) {
-        loginController.displayMenu(textMenu: textMenu)
+        loginController.open(textMenu: textMenu)
     }
     
     func displayUserMenu(textMenu: String) {
@@ -47,7 +47,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
             print("No se encontró el usuario")
             return
         }
-        regularUserController.displayMenu(texMenu: textMenu, user: user)
+        regularUserController.open(texMenu: textMenu, user: user)
     }
     
     func displayAdminMenu(textMenu: String) {

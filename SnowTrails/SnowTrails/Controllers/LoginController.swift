@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginControllerImplementation {
-    func displayMenu(textMenu: String)
+    func open(textMenu: String)
     var loginControllerDelegate: LoginControllerDelegate? { get set }
     var quitLogin: Bool { get set }
 }
@@ -30,7 +30,7 @@ class LoginController: LoginControllerImplementation {
         loginControllerDelegate = nil
     }
     
-    func displayMenu(textMenu: String) {
+    func open(textMenu: String) {
         while !quitLogin {
             print(textMenu)
             
@@ -49,7 +49,7 @@ class LoginController: LoginControllerImplementation {
     }
     
     private func login() {
-        // TODO: Complementary - validate user credentials and role
+        // TODO: Complementary - validate user credentials
         print("Ingresa tu email: ")
         let emailInput = readLine() ?? ""
         

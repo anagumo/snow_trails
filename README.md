@@ -15,7 +15,7 @@ I have **controllers** to interact whit the user, these controllers uses **servi
 ## Sequence diagram
 
 At the moment the diagram includes the **Login** flow, ignore the override them entities I wanted to put them somewhere.
-![](snow_trails_sequence.png)
+![](Images/snow_trails_sequence.png)
 
 ## Obligatory functionality
 
@@ -23,10 +23,20 @@ At the moment the diagram includes the **Login** flow, ignore the override them 
 
 I coded he Login flow using a `LoginController`, a `LoginService`, a `UserDataLoader` and a `user.json` file to host two default users: regular and admin. Throw a delegate called `LoginControllerDelegate` that implement the `MenuController` I close the login menu to start the corresponding user one. Previously I provided feedback to the user for a login sucess. Finally I configured **testing** to add a Login suite.
 
+😮‍💨 Problems everywhere
+
+When I was programming the Logout functionality, I figured out that the app's flow **had a problem**: When the user closed their session and tried to login/logout again, the **menu was broken**. The main problem as _@tecosabri_ said, was that there was no more code to execute since the last option selected by the user in Login menu was `.Quit`, so the app's flow was terminated every time we open for a second time that controller. 
+
+The first thing I realized was I needed to reset the data of `LoginController` before evaluating again. I applied this solution for `RegularUserController` too, and it worked. Also, I attached the validation to the user sesion insted to the selected option to have better control over the app's flow.
+
+| Issue | Fix |
+|--------|------|
+| <img src="Images/flow_issue.png" width="300"/>  | <img src="Images/flow_fixed.png" width="250"/> |
+
+
 ## Complementary functionality
 
 ✅ Login Menu
-
 I coded an option to get the user role using a `UserType`, this enum is created when the `users.json` file is decoded to a `User` entity:
 
 ```

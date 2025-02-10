@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RegularUserControllerImplementation {
-    func displayMenu(texMenu: String, user: User)
+    func open(texMenu: String, user: User)
     var regularUserControllerDelegate: RegularUserControllerDelegate? { get set }
 }
 
@@ -29,7 +29,7 @@ class RegularUserController: RegularUserControllerImplementation {
         regularUserControllerDelegate = nil
     }
     
-    func displayMenu(texMenu: String, user: User) {
+    func open(texMenu: String, user: User) {
         isLoggedIn = user.isLoggedIn
         
         while isLoggedIn {
@@ -42,18 +42,22 @@ class RegularUserController: RegularUserControllerImplementation {
                 case .ShortRoute:
                     print("Esta funcionalidad no está implementada")
                 case .Logout:
-                    userService.logout(userId: user.id) { onSuccessMessage in
-                        isLoggedIn = false
-                        print(onSuccessMessage)
-                        regularUserControllerDelegate?.onLogoutSuccess()
-                    } onError: { errorMessage in
-                        print(errorMessage)
-                    }
+                    logout(userId: user.id)
                 }
             } else {
                 //TODO: Complementary - Handle Menu error
                 print("Opción inválida\n")
             }
+        }
+    }
+    
+    private func logout(userId: String) {
+        userService.logout(userId: userId) { onSuccessMessage in
+            isLoggedIn = false
+            print(onSuccessMessage)
+            regularUserControllerDelegate?.onLogoutSuccess()
+        } onError: { errorMessage in
+            print(errorMessage)
         }
     }
 }

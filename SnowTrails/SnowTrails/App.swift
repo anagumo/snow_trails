@@ -25,6 +25,6 @@ class App {
     }
     
     func run() {
-        menuController.build()
+        menuController.open()
     }
 }
