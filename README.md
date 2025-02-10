@@ -25,9 +25,9 @@ I coded he Login flow using a `LoginController`, a `LoginService`, a `UserDataLo
 
 😮‍💨 Problems everywhere
 
-When I was programming the Logout functionality, I figured out that the app's flow **had a problem**: When the user closed their session and tried to login/logout again, the **menu was broken**. The main problem as _@tecosabri_ said, was that there was no more code to execute since the last option selected by the user in Login menu was `.Quit`, so the app's flow was terminated every time we open for a second time that controller. 
+When I was programming the Logout functionality, I figured out that the app's flow **had a problem**: When the user closed their session and tried to login/logout again, the **menu was broken**. The main problem as [@tecosabri](https://github.com/tecosabri) said, was that there was no more code to execute since the last option selected by the user in Login menu was `.Quit`, so the app's flow was terminated every time we open for a second time that controller. 
 
-The first thing I realized was I needed to reset the data of `LoginController` before evaluating again. I applied this solution for `RegularUserController` too, and it worked. Also, I attached the validation to the user sesion insted to the selected option to have better control over the app's flow.
+The first thing I realized was I needed to reset the data of `LoginController` before evaluating again. I applied this solution:  [7e8e576](https://github.com/anagumo/snow_trails/commit/7e8e5765e2f052c47239cb5469f57562f379acad) and [c79dc70](https://github.com/anagumo/snow_trails/commit/c79dc708c8cbed3ef1b2acc6ff014309ffabd3a6) for `RegularUserController` too, and it worked. Also, I attached the validation to the user sesion insted to the selected option to have better control over the app's flow.
 
 | Issue | Fix |
 |--------|------|
