@@ -30,7 +30,7 @@ class UserDataLoader {
             if let testData {
                 data = testData
             } else {
-                guard let filepath =  Bundle.main.path(forResource: "users", ofType: "json", inDirectory: "DataSource/users") else {
+                guard let filepath =  Bundle.main.path(forResource: "users", ofType: "json", inDirectory: "DataSource/resources") else {
                     print("Error: No se encontró el archivo users.json en el bundle.")
                     return nil
                 }

@@ -1,0 +1,266 @@
+{
+    "routes": [
+        {
+            "id": "1",
+            "name": "Ruta del Pico Nevado y Lago Helado",
+            "points": [
+                {
+                    "id" : "1",
+                    "name": "Alpina Grande",
+                    "latitude": 46.0000,
+                    "longitude": 7.5000,
+                    "altitude": 1500.0
+                },
+                {
+                    "id" : "3",
+                    "name": "Pico Nevado",
+                    "latitude": 46.1000,
+                    "longitude": 7.6000,
+                    "altitude": 1600.0
+                },
+                {
+                    "id" : "6",
+                    "name": "Lago Helado",
+                    "latitude": 46.200,
+                    "longitude": 7.7000,
+                    "altitude": 1700.0
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Ruta del Valle Blanco y Refugio Alpino",
+            "points": [
+                {
+                    "id" : "1",
+                    "name": "Alpina Grande",
+                    "latitude": 46.0000,
+                    "longitude": 7.5000,
+                    "altitude": 1500.0
+                },
+                {
+                    "id" : "4",
+                    "name": "Valle Blanco",
+                    "latitude": 45.9000,
+                    "longitude": 7.4000,
+                    "altitude": 1400.0
+                },
+                {
+                    "id" : "10",
+                    "name": "Refugio Alpino",
+                    "latitude": 46.0500,
+                    "longitude": 7.4500,
+                    "altitude": 1450.0
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Ruta de la Cumbre Azul y Cerro Plateado",
+            "points": [
+                {
+                    "id" : "1",
+                    "name": "Alpina Grande",
+                    "latitude": 46.0000,
+                    "longitude": 7.5000,
+                    "altitude": 1500.0
+                },
+                {
+                    "id" : "5",
+                    "name": "Cumbre Azul",
+                    "latitude": 46.0500,
+                    "longitude": 7.5500,
+                    "altitude": 1550.0
+                },
+                {
+                    "id" : "8",
+                    "name": "Cerro Plateado",
+                    "latitude": 46.1500,
+                    "longitude": 7.6500,
+                    "altitude": 1650.0
+                },
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Ruta del Bosque Nevado y Cascada Blanca",
+            "points": [
+                {
+                    "id" : "6",
+                    "name": "Lago Helado",
+                    "latitude": 46.200,
+                    "longitude": 7.7000,
+                    "altitude": 1700.0
+                },
+                {
+                    "id" : "7",
+                    "name": "Bosque Nevado",
+                    "latitude": 46.3000,
+                    "longitude": 7.8000,
+                    "altitude": 1800.0
+                },
+                {
+                    "id" : "9",
+                    "name": "Cascada Blanca",
+                    "latitude": 46.2500,
+                    "longitude": 7.7500,
+                    "altitude": 1750.0
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Ruta completa de Alpina Grande a Cascada Blanca",
+            "points": [
+                {
+                    "id" : "1",
+                    "name": "Alpina Grande",
+                    "latitude": 46.0000,
+                    "longitude": 7.5000,
+                    "altitude": 1500.0
+                },
+                {
+                    "id" : "3",
+                    "name": "Pico Nevado",
+                    "latitude": 46.1000,
+                    "longitude": 7.6000,
+                    "altitude": 1600.0
+                },
+                {
+                    "id" : "6",
+                    "name": "Lago Helado",
+                    "latitude": 46.200,
+                    "longitude": 7.7000,
+                    "altitude": 1700.0
+                },
+                {
+                    "id" : "7",
+                    "name": "Bosque Nevado",
+                    "latitude": 46.3000,
+                    "longitude": 7.8000,
+                    "altitude": 1800.0
+                },
+                {
+                    "id" : "9",
+                    "name": "Cascada Blanca",
+                    "latitude": 46.2500,
+                    "longitude": 7.7500,
+                    "altitude": 1750.0
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Ruta del Refugio Aislado",
+            "points": [
+                {
+                    "id" : "11",
+                    "name": "Refugio Aislado",
+                    "latitude": 46.0000,
+                    "longitude": 7.4000,
+                    "altitude": 1400.0
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Ruta Alpina",
+            "points": [
+                {
+                    "id" : "1",
+                    "name": "Alpina Grande",
+                    "latitude": 46.0000,
+                    "longitude": 7.5000,
+                    "altitude": 1500.0
+                },
+                {
+                    "id" : "2",
+                    "name": "Alpina Pequeña",
+                    "latitude": 46.0022,
+                    "longitude": 7.5200,
+                    "altitude": 1200.0
+                }
+            ]
+        }
+    ],
+    // TODO: Implement relation 1:M in a future iteration
+    "points": [
+        {
+            "id" : "1",
+            "name": "Alpina Grande",
+            "latitude": 46.0000,
+            "longitude": 7.5000,
+            "altitude": 1500.0
+        },
+        {
+            "id" : "2",
+            "name": "Alpina Pequeña",
+            "latitude": 46.0022,
+            "longitude": 7.5200,
+            "altitude": 1200.0
+        },
+        {
+            "id" : "3",
+            "name": "Pico Nevado",
+            "latitude": 46.1000,
+            "longitude": 7.6000,
+            "altitude": 1600.0
+        },
+        {
+            "id" : "4",
+            "name": "Valle Blanco",
+            "latitude": 45.9000,
+            "longitude": 7.4000,
+            "altitude": 1400.0
+        },
+        {
+            "id" : "5",
+            "name": "Cumbre Azul",
+            "latitude": 46.0500,
+            "longitude": 7.5500,
+            "altitude": 1550.0
+        },
+        {
+            "id" : "6",
+            "name": "Lago Helado",
+            "latitude": 46.200,
+            "longitude": 7.7000,
+            "altitude": 1700.0
+        },
+        {
+            "id" : "7",
+            "name": "Bosque Nevado",
+            "latitude": 46.3000,
+            "longitude": 7.8000,
+            "altitude": 1800.0
+        },
+        {
+            "id" : "8",
+            "name": "Cerro Plateado",
+            "latitude": 46.1500,
+            "longitude": 7.6500,
+            "altitude": 1650.0
+        },
+        {
+            "id" : "9",
+            "name": "Cascada Blanca",
+            "latitude": 46.2500,
+            "longitude": 7.7500,
+            "altitude": 1750.0
+        },
+        {
+            "id" : "10",
+            "name": "Refugio Alpino",
+            "latitude": 46.0500,
+            "longitude": 7.4500,
+            "altitude": 1450.0
+        },
+        {
+            "id" : "11",
+            "name": "Refugio Aislado",
+            "latitude": 46.0000,
+            "longitude": 7.4000,
+            "altitude": 1400.0
+        }
+    ]
+}

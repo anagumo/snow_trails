@@ -38,7 +38,8 @@ class RegularUserController: RegularUserControllerImplementation {
             if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
                 switch regularUserOption {
                 case .Routes:
-                    print("Ver rutas")
+                    // TODO: Implement routes controller
+                    break
                 case .ShortRoute:
                     print("Esta funcionalidad no está implementada")
                 case .Logout:
