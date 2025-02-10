@@ -71,6 +71,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
     // MARK: User Delegate functions
     func onLogoutSuccess() {
         user = nil
+        loginController.isLoggedIn = false
         menu?.getMenu(.Login)
     }
 }
