@@ -10,7 +10,7 @@ import Foundation
 protocol LoginControllerImplementation {
     func displayMenu(textMenu: String)
     var loginControllerDelegate: LoginControllerDelegate? { get set }
-    var isLoggedIn: Bool { get set }
+    var quitLogin: Bool { get set }
 }
 
 protocol LoginControllerDelegate: AnyObject { // The compiler requieres this protocol (?)
@@ -20,7 +20,7 @@ protocol LoginControllerDelegate: AnyObject { // The compiler requieres this pro
 class LoginController: LoginControllerImplementation {
     private let loginService: LoginServiceImplementation
     weak var loginControllerDelegate: LoginControllerDelegate?
-    var isLoggedIn: Bool = false
+    var quitLogin: Bool = false
     
     init(loginService: LoginServiceImplementation) {
         self.loginService = loginService
@@ -31,7 +31,7 @@ class LoginController: LoginControllerImplementation {
     }
     
     func displayMenu(textMenu: String) {
-        while !isLoggedIn {
+        while !quitLogin {
             print(textMenu)
             
             if let loginOption = LoginOption(from: readLine() ?? nil) {
@@ -39,7 +39,7 @@ class LoginController: LoginControllerImplementation {
                 case .LoginUser, .LoginAdmin:
                     login()
                 case .Quit:
-                    break
+                    quitLogin = true
                 }
             } else {
                 //TODO: Complementary - Handle Menu error
@@ -57,7 +57,7 @@ class LoginController: LoginControllerImplementation {
         let passwordInput = readLine() ?? ""
         
         loginService.login(emailInput: emailInput, passwordInput: passwordInput) { successMessage, user in
-            isLoggedIn = user.isLoggedIn
+            quitLogin = user.isLoggedIn
             print(successMessage)
             loginControllerDelegate?.onLoginSuccess(user: user)
         } onError: { errorMessage in

@@ -19,7 +19,7 @@ protocol RegularUserControllerDelegate: AnyObject {
 class RegularUserController: RegularUserControllerImplementation {
     private var userService: UserService
     weak var regularUserControllerDelegate: RegularUserControllerDelegate?
-    private var regularUserOption: RegularUserOption?
+    private var isLoggedIn: Bool = true
     
     init(userService: UserService) {
         self.userService = userService
@@ -27,16 +27,15 @@ class RegularUserController: RegularUserControllerImplementation {
     
     deinit {
         regularUserControllerDelegate = nil
-        regularUserOption = nil
     }
     
     func displayMenu(texMenu: String, user: User) {
-        while regularUserOption == nil {
+        isLoggedIn = user.isLoggedIn
+        
+        while isLoggedIn {
             print(texMenu)
             
             if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
-                self.regularUserOption = regularUserOption
-                
                 switch regularUserOption {
                 case .Routes:
                     print("Ver rutas")
@@ -44,6 +43,7 @@ class RegularUserController: RegularUserControllerImplementation {
                     print("Esta funcionalidad no está implementada")
                 case .Logout:
                     userService.logout(userId: user.id) { onSuccessMessage in
+                        isLoggedIn = false
                         print(onSuccessMessage)
                         regularUserControllerDelegate?.onLogoutSuccess()
                     } onError: { errorMessage in

@@ -44,6 +44,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
     
     func displayUserMenu(textMenu: String) {
         guard let user else {
+            print("No se encontró el usuario")
             return
         }
         regularUserController.displayMenu(texMenu: textMenu, user: user)
@@ -71,7 +72,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
     // MARK: User Delegate functions
     func onLogoutSuccess() {
         user = nil
-        loginController.isLoggedIn = false
+        loginController.quitLogin = false
         menu?.getMenu(.Login)
     }
 }
