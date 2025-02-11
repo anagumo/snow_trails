@@ -101,7 +101,7 @@ class SnowTrailsTesting {
         }
         
         @Test func addUserSuccess() async throws {
-            let userAdded = userDataLoader.add(name: "Regularuserkeepcoding2", email: "regularuser2@keepcoding.es", password: "Regularuser2")
+            let userAdded = userDataLoader.add(username: "Regularuserkeepcoding2", email: "regularuser2@keepcoding.es", password: "Regularuser2")
             let userFound = userDataLoader.users.filter {
                 $0.username == userAdded?.username
             }.first
@@ -110,7 +110,7 @@ class SnowTrailsTesting {
         }
         
         @Test func deleteUserSuccess() async throws {
-            let userAdded = userDataLoader.add(name: "Regularuserkeepcoding2", email: "regularuser2@keepcoding.es", password: "Regularuser2")
+            let userAdded = userDataLoader.add(username: "Regularuserkeepcoding2", email: "regularuser2@keepcoding.es", password: "Regularuser2")
             let isDeletionSuccess = userDataLoader.delete(username: userAdded?.username ?? "")
             
             #expect(isDeletionSuccess, "It is expected to return true since there was a user in the loader")

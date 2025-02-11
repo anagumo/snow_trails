@@ -91,12 +91,12 @@ class UserDataLoader {
         users
     }
     
-    func add(name: String, email: String, password: String) -> User? {
+    func add(username: String, email: String, password: String) -> User? {
         guard let lastUserId = Int(users.last?.id ?? "") else {
             return nil
         }
         let userId = String(lastUserId + 1)
-        let user = User(id: userId, username: name, email: email, password: password, role: .regular, isLoggedIn: false)
+        let user = User(id: userId, username: username, email: email, password: password, role: .regular, isLoggedIn: false)
         users.append(user)
         
         return user

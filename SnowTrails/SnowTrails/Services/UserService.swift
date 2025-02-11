@@ -29,7 +29,7 @@ class UserService: UserServiceImplementation {
     }
     
     func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ()) {
-        guard let userAdded = userDataLoader.add(name: username, email: email, password: password) else {
+        guard let userAdded = userDataLoader.add(username: username, email: email, password: password) else {
             return onError("Ocurrió un error al agregar el usuario")
         }
         
