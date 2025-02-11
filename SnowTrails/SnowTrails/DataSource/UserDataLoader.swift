@@ -86,4 +86,35 @@ class UserDataLoader {
             completion($0)
         }
     }
+    
+    func getAll() -> [User] {
+        users
+    }
+    
+    func add(name: String, email: String, password: String) -> User? {
+        guard let lastUserId = Int(users.last?.id ?? "") else {
+            return nil
+        }
+        let userId = String(lastUserId + 1)
+        let user = User(id: userId, username: name, email: email, password: password, role: .regular, isLoggedIn: false)
+        users.append(user)
+        
+        return user
+    }
+    
+    func delete(username: String) -> Bool {
+        let hasUser = users.contains { user in
+            user.username == username
+        }
+        
+        guard hasUser else {
+            return hasUser
+        }
+        
+        users.removeAll { user in
+            user.username == username
+        }
+        
+        return hasUser
+    }
 }
