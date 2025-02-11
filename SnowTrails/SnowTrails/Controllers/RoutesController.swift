@@ -25,7 +25,7 @@ class RoutesController: RoutesControllerImplementation {
     private func getRoutesFormatted() -> String {
         routesService.getRoutes()
             .reduce("") {
-                $0 + $1.description() + "\n"
+                $0 + $1.getDescription() + "\n"
             }
     }
 }
