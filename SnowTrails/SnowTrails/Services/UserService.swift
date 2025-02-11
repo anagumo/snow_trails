@@ -8,6 +8,7 @@
 import Foundation
 
 protocol UserServiceImplementation {
+    func getAll(onSuccess: ([User]) -> (), onError: (String) -> ())
     func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ())
 }
 
@@ -16,6 +17,14 @@ class UserService: UserServiceImplementation {
     
     init(userDataLoader: UserDataLoader) {
         self.userDataLoader = userDataLoader
+    }
+    
+    func getAll(onSuccess: ([User]) -> (), onError: (String) -> ()) {
+        guard !userDataLoader.getAll().isEmpty else {
+            return onError("No se encontraron usuarios en la base de datos")
+        }
+        
+        onSuccess(userDataLoader.getAll())
     }
     
     func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ()) {

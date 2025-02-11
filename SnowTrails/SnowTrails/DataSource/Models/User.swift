@@ -25,6 +25,15 @@ enum UserType: String, Codable {
             return nil
         }
     }
+    
+    func getDescription() -> String {
+        switch self {
+        case .regular:
+            return "Admin"
+        case .admin:
+            return "Regular user"
+        }
+    }
 }
 
 struct UserResponse: Codable {
@@ -49,5 +58,13 @@ struct User: Codable, Hashable {
         }
         
         return "Has iniciado sesión correctamente como usuario \(role)\n"
+    }
+    
+    func getDescription() -> String {
+        guard let roleDescription = role?.getDescription() else {
+            return "User: \(username) --- Email: \(email)"
+        }
+        
+        return "\(roleDescription): \(username) --- Email: \(email)"
     }
 }

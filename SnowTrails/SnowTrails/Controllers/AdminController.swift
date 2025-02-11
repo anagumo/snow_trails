@@ -12,6 +12,11 @@ protocol AdminControllerImplementation {
 }
 
 class AdminController: AdminControllerImplementation {
+    private let userService: UserService
+    
+    init(userService: UserService) {
+        self.userService = userService
+    }
     
     func open(textMenu: String) {
         while true {
@@ -20,7 +25,7 @@ class AdminController: AdminControllerImplementation {
             if let adminOption = AdminOption(from: readLine() ?? nil) {
                 switch adminOption {
                 case .Users:
-                    print("Esta funcionalidad no está implementada\n")
+                    getUsers()
                 case .AddUser:
                     print("Esta funcionalidad no está implementada\n")
                 case .DeleteUser:
@@ -34,6 +39,18 @@ class AdminController: AdminControllerImplementation {
                 // TODO: Complementary - Handle error
                 print("Opción inválida\n")
             }
+        }
+    }
+    
+    private func getUsers() {
+        userService.getAll { users in
+            let usersText = users.reduce("") {
+                $0 + $1.getDescription() + "\n"
+            }
+            print(usersText)
+        } onError: { errorMessage in
+            // TODO: Complementary - Handle error
+            print(errorMessage)
         }
     }
 }

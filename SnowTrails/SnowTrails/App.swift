@@ -15,7 +15,7 @@ class App {
         let loginService = LoginService(userDataLoader: userDataLoader)
         let loginController = LoginController(loginService: loginService)
         let userService = UserService(userDataLoader: userDataLoader)
-        let adminController = AdminController()
+        let adminController = AdminController(userService: userService)
         let routesLoader = RoutesLoader()
         let routesService = RoutesService(routesLoader: routesLoader)
         let routesController = RoutesController(routesService: routesService)
