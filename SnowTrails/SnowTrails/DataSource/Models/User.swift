@@ -29,9 +29,9 @@ enum UserType: String, Codable {
     func getDescription() -> String {
         switch self {
         case .regular:
-            return "Admin"
-        case .admin:
             return "Regular user"
+        case .admin:
+            return "Admin"
         }
     }
 }
@@ -52,6 +52,15 @@ struct User: Codable, Hashable {
         lhs.id == rhs.id
     }
     
+    func getDescription() -> String {
+        guard let roleDescription = role?.getDescription() else {
+            return "User: \(username) --- Email: \(email)"
+        }
+        
+        return "\(roleDescription): \(username) --- Email: \(email)"
+    }
+    
+    // MARK: Success messages
     func getLoginMessage() -> String {
         guard let role else {
             return "Has iniciado sesión correctamente\n"
@@ -60,11 +69,7 @@ struct User: Codable, Hashable {
         return "Has iniciado sesión correctamente como usuario \(role)\n"
     }
     
-    func getDescription() -> String {
-        guard let roleDescription = role?.getDescription() else {
-            return "User: \(username) --- Email: \(email)"
-        }
-        
-        return "\(roleDescription): \(username) --- Email: \(email)"
+    func getAddUserMessage() -> String {
+        "Usuario \(username) con email \(email) añadido satisfactoriamente\n"
     }
 }

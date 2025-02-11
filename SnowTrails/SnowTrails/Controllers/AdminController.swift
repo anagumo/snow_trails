@@ -27,7 +27,7 @@ class AdminController: AdminControllerImplementation {
                 case .Users:
                     getUsers()
                 case .AddUser:
-                    print("Esta funcionalidad no está implementada\n")
+                    addUser()
                 case .DeleteUser:
                     print("Esta funcionalidad no está implementada\n")
                 case .AddPointToRoute:
@@ -48,6 +48,22 @@ class AdminController: AdminControllerImplementation {
                 $0 + $1.getDescription() + "\n"
             }
             print(usersText)
+        } onError: { errorMessage in
+            // TODO: Complementary - Handle error
+            print(errorMessage)
+        }
+    }
+    
+    private func addUser() {
+        print("Introduce el nombre del usuario que quieres añadir")
+        let username = readLine() ?? ""
+        print("Introduce el email del usuario que quieres añadir")
+        let email = readLine() ?? ""
+        print("Introduce la contraseña del usuario que quieres añadir")
+        let password = readLine() ?? ""
+        
+        userService.addUser(username: username, email: email, password: password) { user in
+            print(user.getAddUserMessage())
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
             print(errorMessage)

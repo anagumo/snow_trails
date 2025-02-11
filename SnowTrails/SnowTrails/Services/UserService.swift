@@ -9,6 +9,7 @@ import Foundation
 
 protocol UserServiceImplementation {
     func getAll(onSuccess: ([User]) -> (), onError: (String) -> ())
+    func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ())
     func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ())
 }
 
@@ -25,6 +26,14 @@ class UserService: UserServiceImplementation {
         }
         
         onSuccess(userDataLoader.getAll())
+    }
+    
+    func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ()) {
+        guard let userAdded = userDataLoader.add(name: username, email: email, password: password) else {
+            return onError("Ocurrió un error al agregar el usuario")
+        }
+        
+        onSuccess(userAdded)
     }
     
     func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ()) {
