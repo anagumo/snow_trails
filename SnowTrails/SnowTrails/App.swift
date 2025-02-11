@@ -8,25 +8,17 @@
 import Foundation
 
 class App {
-    private var userDataLoader: UserDataLoader
-    private var loginService: LoginServiceImplementation
-    private var loginController: LoginControllerImplementation
-    private var userService: UserService
-    private var regularUserController: RegularUserControllerImplementation
-    private var routesLoader: RoutesLoader
-    private var routesService: RoutesService
-    private var routesController: RoutesController
     private var menuController: MenuControllerImplementation
     
     init() {
-        userDataLoader = UserDataLoader()
-        loginService = LoginService(userDataLoader: userDataLoader)
-        loginController = LoginController(loginService: loginService)
-        userService = UserService(userDataLoader: userDataLoader)
-        routesLoader = RoutesLoader()
-        routesService = RoutesService(routesLoader: routesLoader)
-        routesController = RoutesController(routesService: routesService)
-        regularUserController = RegularUserController(userService: userService, routesController: routesController)
+        let userDataLoader = UserDataLoader()
+        let loginService = LoginService(userDataLoader: userDataLoader)
+        let loginController = LoginController(loginService: loginService)
+        let userService = UserService(userDataLoader: userDataLoader)
+        let routesLoader = RoutesLoader()
+        let routesService = RoutesService(routesLoader: routesLoader)
+        let routesController = RoutesController(routesService: routesService)
+        let regularUserController = RegularUserController(userService: userService, routesController: routesController)
         menuController = MenuController(loginController: loginController, regularUserController: regularUserController)
     }
     
