@@ -13,6 +13,9 @@ class App {
     private var loginController: LoginControllerImplementation
     private var userService: UserService
     private var regularUserController: RegularUserControllerImplementation
+    private var routesLoader: RoutesLoader
+    private var routesService: RoutesService
+    private var routesController: RoutesController
     private var menuController: MenuControllerImplementation
     
     init() {
@@ -20,7 +23,10 @@ class App {
         loginService = LoginService(userDataLoader: userDataLoader)
         loginController = LoginController(loginService: loginService)
         userService = UserService(userDataLoader: userDataLoader)
-        regularUserController = RegularUserController(userService: userService)
+        routesLoader = RoutesLoader()
+        routesService = RoutesService(routesLoader: routesLoader)
+        routesController = RoutesController(routesService: routesService)
+        regularUserController = RegularUserController(userService: userService, routesController: routesController)
         menuController = MenuController(loginController: loginController, regularUserController: regularUserController)
     }
     

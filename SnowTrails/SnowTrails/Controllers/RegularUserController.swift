@@ -18,11 +18,13 @@ protocol RegularUserControllerDelegate: AnyObject {
 
 class RegularUserController: RegularUserControllerImplementation {
     private var userService: UserService
+    private var routesController: RoutesControllerImplementation
     weak var regularUserControllerDelegate: RegularUserControllerDelegate?
     private var isLoggedIn: Bool = true
     
-    init(userService: UserService) {
+    init(userService: UserService, routesController: RoutesControllerImplementation) {
         self.userService = userService
+        self.routesController = routesController
     }
     
     deinit {
@@ -38,8 +40,7 @@ class RegularUserController: RegularUserControllerImplementation {
             if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
                 switch regularUserOption {
                 case .Routes:
-                    // TODO: Implement routes controller
-                    break
+                    routesController.getRoutes()
                 case .ShortRoute:
                     print("Esta funcionalidad no está implementada")
                 case .Logout:

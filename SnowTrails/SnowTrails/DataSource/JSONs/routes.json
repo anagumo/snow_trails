@@ -183,7 +183,6 @@
             ]
         }
     ],
-    // TODO: Implement relation 1:M in a future iteration
     "points": [
         {
             "id" : "1",
