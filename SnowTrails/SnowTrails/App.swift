@@ -15,11 +15,14 @@ class App {
         let loginService = LoginService(userDataLoader: userDataLoader)
         let loginController = LoginController(loginService: loginService)
         let userService = UserService(userDataLoader: userDataLoader)
+        let adminController = AdminController()
         let routesLoader = RoutesLoader()
         let routesService = RoutesService(routesLoader: routesLoader)
         let routesController = RoutesController(routesService: routesService)
         let regularUserController = RegularUserController(userService: userService, routesController: routesController)
-        menuController = MenuController(loginController: loginController, regularUserController: regularUserController)
+        menuController = MenuController(loginController: loginController,
+                                        regularUserController: regularUserController,
+                                        adminController: adminController)
     }
     
     func run() {

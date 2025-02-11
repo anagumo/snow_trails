@@ -14,12 +14,16 @@ protocol MenuControllerImplementation {
 class MenuController: MenuControllerImplementation {
     private var loginController: LoginControllerImplementation
     private var regularUserController: RegularUserControllerImplementation
+    private var adminController: AdminControllerImplementation
     private var menu: Menu?
     private var user: User?
     
-    init(loginController: LoginControllerImplementation, regularUserController: RegularUserControllerImplementation) {
+    init(loginController: LoginControllerImplementation,
+         regularUserController: RegularUserControllerImplementation,
+         adminController: AdminControllerImplementation) {
         self.loginController = loginController
         self.regularUserController = regularUserController
+        self.adminController = adminController
         menu = Menu(menuDelegate: self)
     }
     
@@ -51,7 +55,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
     }
     
     func displayAdminMenu(textMenu: String) {
-        print(textMenu)
+        adminController.open(textMenu: textMenu)
     }
     
     // MARK: Login Delegate functions
@@ -62,7 +66,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
         case .regular:
             menu?.getMenu(.RegularUser)
         case .admin:
-            print("Display admin user menu")
+            menu?.getMenu(.Admin)
         default:
             // TODO: Complementary - Handle error
             print("Tipo de usuario no identificado")

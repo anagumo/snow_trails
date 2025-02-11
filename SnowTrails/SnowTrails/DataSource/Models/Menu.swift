@@ -56,7 +56,7 @@ struct Menu: MenuImplementation {
     func displayAdminMenu() {
         let textMenu = AdminOption.allCases
             .enumerated()
-            .reduce("👩🏻‍💼 Menú admin - Selecciona una opción:s\n") {
+            .reduce("👩🏻‍💼 Menú admin - Selecciona una opción:\n") {
                 let (index, option) = $1
                 return $0 + "\(index + 1). \(option.rawValue)\n"
             }
