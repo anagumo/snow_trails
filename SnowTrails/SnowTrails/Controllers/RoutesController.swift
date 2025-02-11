@@ -19,8 +19,13 @@ class RoutesController: RoutesControllerImplementation {
     }
     
     func getRoutes() {
-        routesService.getRoutes().forEach { route in
-            print(route.name)
-        }
+        print(getRoutesFormatted())
+    }
+    
+    private func getRoutesFormatted() -> String {
+        routesService.getRoutes()
+            .reduce("") {
+                $0 + $1.description() + "\n"
+            }
     }
 }

@@ -23,4 +23,19 @@ struct Route: Codable {
     let id: String
     let name: String
     let points: [GeographicPoint]
+    
+    func description() -> String {
+        "\(name) - \(getKms()) Km"
+    }
+    
+    func getKms() -> Double {
+        guard points.count > 1 else {
+            return 0
+        }
+        
+        return points.reduce(0) { partialResult, point in
+            // TODO: Replace by the sum of distances between each point
+            partialResult + point.latitude
+        }
+    }
 }
