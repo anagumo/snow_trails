@@ -29,7 +29,7 @@ class AdminController: AdminControllerImplementation {
                 case .AddUser:
                     addUser()
                 case .DeleteUser:
-                    print("Esta funcionalidad no está implementada\n")
+                    deleteUser()
                 case .AddPointToRoute:
                     print("Esta funcionalidad no está implementada\n")
                 case .Logout:
@@ -64,6 +64,18 @@ class AdminController: AdminControllerImplementation {
         
         userService.addUser(username: username, email: email, password: password) { user in
             print(user.getAddUserMessage())
+        } onError: { errorMessage in
+            // TODO: Complementary - Handle error
+            print(errorMessage)
+        }
+    }
+    
+    private func deleteUser() {
+        print("Introduce el nombre del usuario que quieras eliminar")
+        let username = readLine() ?? ""
+        
+        userService.deleteUser(username: username) {
+            print("Usuario eliminado satisfactoriamente\n")
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
             print(errorMessage)
