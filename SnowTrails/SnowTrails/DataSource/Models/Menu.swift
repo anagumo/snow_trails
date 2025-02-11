@@ -61,7 +61,7 @@ struct Menu: MenuImplementation {
                 return $0 + "\(index + 1). \(option.rawValue)\n"
             }
         
-        menuDelegate?.displayUserMenu(textMenu: textMenu)
+        menuDelegate?.displayAdminMenu(textMenu: textMenu)
     }
 }
 
@@ -116,7 +116,7 @@ enum AdminOption: String, CaseIterable {
     case AddPointToRoute = "Añadir punto a ruta"
     case Logout = "Cerrar sesión"
     
-    init?(from input: String) {
+    init?(from input: String?) {
         switch input {
         case "1":
             self = .Users

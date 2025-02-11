@@ -14,6 +14,26 @@ protocol AdminControllerImplementation {
 class AdminController: AdminControllerImplementation {
     
     func open(textMenu: String) {
-        print(textMenu)
+        while true {
+            print(textMenu)
+            
+            if let adminOption = AdminOption(from: readLine() ?? nil) {
+                switch adminOption {
+                case .Users:
+                    print("Esta funcionalidad no está implementada\n")
+                case .AddUser:
+                    print("Esta funcionalidad no está implementada\n")
+                case .DeleteUser:
+                    print("Esta funcionalidad no está implementada\n")
+                case .AddPointToRoute:
+                    print("Esta funcionalidad no está implementada\n")
+                case .Logout:
+                    print("Esta funcionalidad no está implementada\n")
+                }
+            } else {
+                // TODO: Complementary - Handle error
+                print("Opción inválida\n")
+            }
+        }
     }
 }
