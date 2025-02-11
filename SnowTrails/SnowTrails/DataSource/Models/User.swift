@@ -45,19 +45,24 @@ struct User: Codable, Hashable {
     let username: String
     let email: String
     let password: String
-    let role: UserType? // From Complementary
+    let role: UserType?
     var isLoggedIn: Bool
     
     static func == (lhs: User, rhs: User) -> Bool {
         lhs.id == rhs.id
     }
     
-    func getDescription() -> String {
-        guard let roleDescription = role?.getDescription() else {
-            return "User: \(username) --- Email: \(email)"
+    func getDescription() throws -> String {
+        let role = try getRole()
+        return "\(role.getDescription()): \(username) --- Email: \(email)"
+    }
+    
+    func getRole() throws -> UserType {
+        guard let role else {
+            throw UserError.role
         }
         
-        return "\(roleDescription): \(username) --- Email: \(email)"
+        return role
     }
     
     // MARK: Success messages

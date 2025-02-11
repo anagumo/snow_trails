@@ -49,10 +49,14 @@ class AdminController: UserControllerImplementation {
     
     private func getUsers() {
         userService.getAll { users in
-            let usersText = users.reduce("") {
-                $0 + $1.getDescription() + "\n"
+            do {
+                let usersText = try users.reduce("") {
+                    return $0 + (try $1.getDescription()) + "\n"
+                }
+                print(usersText)
+            } catch {
+                print(UserError(from: error).errorDescription)
             }
-            print(usersText)
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
             print(errorMessage)
