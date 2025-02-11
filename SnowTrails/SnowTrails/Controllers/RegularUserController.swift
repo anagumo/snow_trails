@@ -7,19 +7,15 @@
 
 import Foundation
 
-protocol RegularUserControllerImplementation {
-    func open(texMenu: String, user: User)
-    var regularUserControllerDelegate: RegularUserControllerDelegate? { get set }
+protocol UserControllerImplementation {
+    func open(textMenu: String, user: User)
+    var loginControllerDelegate: LoginControllerDelegate? { get set }
 }
 
-protocol RegularUserControllerDelegate: AnyObject {
-    func onLogoutSuccess()
-}
-
-class RegularUserController: RegularUserControllerImplementation {
+class RegularUserController: UserControllerImplementation {
     private var userService: UserService
     private var routesController: RoutesControllerImplementation
-    weak var regularUserControllerDelegate: RegularUserControllerDelegate?
+    weak var loginControllerDelegate: LoginControllerDelegate?
     private var isLoggedIn: Bool = true
     
     init(userService: UserService, routesController: RoutesControllerImplementation) {
@@ -28,14 +24,14 @@ class RegularUserController: RegularUserControllerImplementation {
     }
     
     deinit {
-        regularUserControllerDelegate = nil
+        loginControllerDelegate = nil
     }
     
-    func open(texMenu: String, user: User) {
+    func open(textMenu: String, user: User) {
         isLoggedIn = user.isLoggedIn
         
         while isLoggedIn {
-            print(texMenu)
+            print(textMenu)
             
             if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
                 switch regularUserOption {
@@ -57,7 +53,7 @@ class RegularUserController: RegularUserControllerImplementation {
         userService.logout(userId: userId) { onSuccessMessage in
             isLoggedIn = false
             print(onSuccessMessage)
-            regularUserControllerDelegate?.onLogoutSuccess()
+            loginControllerDelegate?.onLogoutSuccess()
         } onError: { errorMessage in
             print(errorMessage)
         }

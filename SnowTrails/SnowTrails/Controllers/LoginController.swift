@@ -13,8 +13,10 @@ protocol LoginControllerImplementation {
     var quitLogin: Bool { get set }
 }
 
+// User controllers shares this protocol
 protocol LoginControllerDelegate: AnyObject { // The compiler requieres this protocol (?)
     func onLoginSuccess(user: User)
+    func onLogoutSuccess()
 }
 
 class LoginController: LoginControllerImplementation {

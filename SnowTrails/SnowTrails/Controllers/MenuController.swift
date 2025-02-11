@@ -13,14 +13,14 @@ protocol MenuControllerImplementation {
 
 class MenuController: MenuControllerImplementation {
     private var loginController: LoginControllerImplementation
-    private var regularUserController: RegularUserControllerImplementation
-    private var adminController: AdminControllerImplementation
+    private var regularUserController: UserControllerImplementation
+    private var adminController: UserControllerImplementation
     private var menu: Menu?
     private var user: User?
     
     init(loginController: LoginControllerImplementation,
-         regularUserController: RegularUserControllerImplementation,
-         adminController: AdminControllerImplementation) {
+         regularUserController: UserControllerImplementation,
+         adminController: UserControllerImplementation) {
         self.loginController = loginController
         self.regularUserController = regularUserController
         self.adminController = adminController
@@ -35,12 +35,13 @@ class MenuController: MenuControllerImplementation {
     // MARK: Main
     func open() {
         loginController.loginControllerDelegate = self
-        regularUserController.regularUserControllerDelegate = self
+        regularUserController.loginControllerDelegate = self
+        adminController.loginControllerDelegate = self
         menu?.getMenu(.Login)
     }
 }
 
-extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserControllerDelegate {
+extension MenuController: MenuDelegate, LoginControllerDelegate {
     // MARK: Menu Delegate functions
     func displayLoginMenu(textMenu: String) {
         loginController.open(textMenu: textMenu)
@@ -51,11 +52,15 @@ extension MenuController: MenuDelegate, LoginControllerDelegate, RegularUserCont
             print("No se encontró el usuario")
             return
         }
-        regularUserController.open(texMenu: textMenu, user: user)
+        regularUserController.open(textMenu: textMenu, user: user)
     }
     
     func displayAdminMenu(textMenu: String) {
-        adminController.open(textMenu: textMenu)
+        guard let user else {
+            print("No se encontró el usuario")
+            return
+        }
+        adminController.open(textMenu: textMenu, user: user)
     }
     
     // MARK: Login Delegate functions

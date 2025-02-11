@@ -7,19 +7,24 @@
 
 import Foundation
 
-protocol AdminControllerImplementation {
-    func open(textMenu: String)
-}
-
-class AdminController: AdminControllerImplementation {
+class AdminController: UserControllerImplementation {
     private let userService: UserService
+    weak var loginControllerDelegate: LoginControllerDelegate?
+    private var isLoggedIn: Bool
     
     init(userService: UserService) {
         self.userService = userService
+        isLoggedIn = false
     }
     
-    func open(textMenu: String) {
-        while true {
+    deinit {
+        loginControllerDelegate = nil
+    }
+    
+    func open(textMenu: String, user: User) {
+        isLoggedIn = user.isLoggedIn
+        
+        while isLoggedIn {
             print(textMenu)
             
             if let adminOption = AdminOption(from: readLine() ?? nil) {
@@ -33,7 +38,7 @@ class AdminController: AdminControllerImplementation {
                 case .AddPointToRoute:
                     print("Esta funcionalidad no está implementada\n")
                 case .Logout:
-                    print("Esta funcionalidad no está implementada\n")
+                    logout(userId: user.id)
                 }
             } else {
                 // TODO: Complementary - Handle error
@@ -76,6 +81,17 @@ class AdminController: AdminControllerImplementation {
         
         userService.deleteUser(username: username) {
             print("Usuario eliminado satisfactoriamente\n")
+        } onError: { errorMessage in
+            // TODO: Complementary - Handle error
+            print(errorMessage)
+        }
+    }
+    
+    func logout(userId: String) {
+        userService.logout(userId: userId) { onSuccessMessage in
+            isLoggedIn = false
+            print(onSuccessMessage)
+            loginControllerDelegate?.onLogoutSuccess()
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
             print(errorMessage)
