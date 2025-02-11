@@ -10,7 +10,7 @@ import Testing
 
 class SnowTrailsTesting {
     
-    @Suite("Login Tests")
+    @Suite("Login")
     class LoginTests {
         var testData: Data?
         let userDataLoader: UserDataLoader
@@ -43,6 +43,42 @@ class SnowTrailsTesting {
             }
             
             #expect(userLoggedOut.isLoggedIn == false, "It is expected that the user is logged out")
+        }
+    }
+    
+    @Suite("Routes")
+    class RouteTests {
+        var testData: Data?
+        var routes: [Route]
+        
+        init() {
+            testData = RouteTestData.givenTwoRoutes() ?? "".data(using: .utf8)!
+            routes = RoutesLoader(from: testData).routes
+        }
+        
+        deinit {
+            testData = nil
+            routes = []
+        }
+        
+        @Test func getRoutesCount() async throws {
+            #expect(routes.count == 2, "It is expected that returns two elements")
+        }
+        
+        @Test func getDistanceEqualToZero() async throws {
+            let distance = routes.first?.getDistance()
+            #expect(distance == 0, "It is expected that the distance is 0 Km")
+        }
+        
+        @Test func getDistanceGreaterThanZero() async throws {
+            let formattedDistance = String(format: "%.2f", routes.last?.getDistance() ?? .zero)
+            #expect(formattedDistance == "1.57", "It is expected that the distance is greater than 0 km")
+        }
+        
+        @Test func getRouteDescription() async throws {
+            let routeDescription = routes.first?.getDescription()
+            #expect(routeDescription == "Ruta del Refugio Aislado - 0.00 Km",
+                    "It is expected that returns the formatted route's description")
         }
     }
 }
