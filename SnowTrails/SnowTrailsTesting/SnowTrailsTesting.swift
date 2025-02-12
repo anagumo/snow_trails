@@ -33,6 +33,10 @@ class SnowTrailsTesting {
             let userLoaded = userDataLoader.login(email: "regularuser@keepcoding.es", password: "Regularuser1")
             #expect(userLoaded != nil, "It is expected that the user is in the data source")
         }
+        
+        @Test func emailError() async throws {
+            
+        }
     }
     
     @Suite("Routes")

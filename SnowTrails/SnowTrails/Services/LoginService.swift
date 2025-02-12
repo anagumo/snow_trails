@@ -7,8 +7,7 @@
 
 import Foundation
 
-protocol LoginServiceImplementation {
-    func validateEmailInput(onSuccess: (String) -> (), onError: (AppError) -> ())
+protocol LoginServiceImplementation: RegexLintDelegate {
     func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ())
 }
 
@@ -19,22 +18,17 @@ class LoginService: LoginServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
-    func validateEmailInput(onSuccess: (String) -> (), onError: (AppError) -> ()) {
-        var email = ""
-        while email.isEmpty {
-            print("Ingresa tu email: ")
-            email = readLine() ?? ""
-            
-            // TODO: Research to improve the Regex linter.
-            do {
-                try RegexLint.validate(data: email, matchWith: .email)
-            } catch {
-                email.removeAll()
-                onError(AppError.email)
+    func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ()) {
+        do {
+            try RegexLint.validate(data: text, matchWith: regexPattern)
+            onSuccess(text)
+        } catch {
+            guard let appError = error as? AppError else {
+                return onError(AppError.unknown)
             }
+            
+            onError(appError)
         }
-        
-        onSuccess(email)
     }
     
     func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {

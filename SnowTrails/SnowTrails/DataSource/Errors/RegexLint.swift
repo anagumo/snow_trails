@@ -7,8 +7,12 @@
 
 import Foundation
 
+protocol RegexLintDelegate {
+    func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ())
+}
+
 enum RegexPattern: String {
-    case email = #"^[\w]+@[a-zA-Z]+\.[es|com]{2,3}$"#
+    case email = #"^[A-Za-z0-9]+@[a-zA-Z]+\.[es|com]{2,3}$"#
     case username = #"[\w]{8,24}"#
 }
 

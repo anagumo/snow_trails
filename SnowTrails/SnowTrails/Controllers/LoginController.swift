@@ -51,17 +51,23 @@ class LoginController: LoginControllerImplementation {
     }
     
     private func login() {
-        var email = ""
-        loginService.validateEmailInput {
-            email = $0
-        } onError: { appError in
-            print(appError.errorDescription)
+        var emailInput = ""
+        while emailInput.isEmpty {
+            print("Ingresa tu email: ")
+            emailInput = readLine() ?? ""
+            
+            loginService.validate(text: emailInput, regexPattern: .email) {
+                emailInput = $0
+            } onError: { appError in
+                print(appError.errorDescription)
+                emailInput.removeAll()
+            }
         }
         
         print("Ingresa tu contraseña: ")
-        let password = readLine() ?? ""
+        let passwordInput = readLine() ?? ""
         
-        loginService.login(email: email, password: password) { successMessage, user in
+        loginService.login(email: emailInput, password: passwordInput) { successMessage, user in
             quitLogin = user.isLoggedIn
             print(successMessage)
             loginControllerDelegate?.onLoginSuccess(user: user)
