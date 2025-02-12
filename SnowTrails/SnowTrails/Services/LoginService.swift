@@ -27,6 +27,7 @@ class LoginService: LoginServiceImplementation {
         onSuccess(user.getLoginMessage(), user)
     }
     
+    // MARK: RegexLint delegate functions
     func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ()) {
         do {
             try RegexLint.validate(data: text, matchWith: regexPattern)

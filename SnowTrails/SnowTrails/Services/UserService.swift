@@ -57,6 +57,8 @@ class UserService: UserServiceImplementation {
         onSuccess("La sesión se ha cerrado correctamente\n")
     }
     
+    
+    // MARK: RegexLint delegate functions
     func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ()) {
         do {
             try RegexLint.validate(data: text, matchWith: regexPattern)
