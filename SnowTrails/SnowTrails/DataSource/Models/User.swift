@@ -59,7 +59,7 @@ struct User: Codable, Hashable {
     
     func getRole() throws -> UserType {
         guard let role else {
-            throw UserError.role
+            throw AppError.role
         }
         
         return role

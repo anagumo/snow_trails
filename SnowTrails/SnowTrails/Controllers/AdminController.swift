@@ -55,7 +55,7 @@ class AdminController: UserControllerImplementation {
                 }
                 print(usersText)
             } catch {
-                print(UserError(from: error).errorDescription)
+                print(AppError(from: error).errorDescription)
             }
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
