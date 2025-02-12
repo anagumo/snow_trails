@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UserServiceImplementation {
+protocol UserServiceImplementation: RegexLintDelegate {
     func getAll(onSuccess: ([User]) -> (), onError: (String) -> ())
     func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ())
     func deleteUser(username: String, onSuccess: () -> (), onError: (String) -> ())
@@ -55,5 +55,18 @@ class UserService: UserServiceImplementation {
         }
         
         onSuccess("La sesión se ha cerrado correctamente\n")
+    }
+    
+    func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ()) {
+        do {
+            try RegexLint.validate(data: text, matchWith: regexPattern)
+            onSuccess(text)
+        } catch {
+            guard let appError = error as? AppError else {
+                return onError(AppError.unknown)
+            }
+            
+            onError(appError)
+        }
     }
 }

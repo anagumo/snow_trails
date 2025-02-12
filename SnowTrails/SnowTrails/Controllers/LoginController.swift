@@ -59,8 +59,8 @@ class LoginController: LoginControllerImplementation {
             loginService.validate(text: emailInput, regexPattern: .email) {
                 emailInput = $0
             } onError: { appError in
-                print(appError.errorDescription)
                 emailInput.removeAll()
+                print(appError.errorDescription)
             }
         }
         

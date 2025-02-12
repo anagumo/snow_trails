@@ -18,6 +18,15 @@ class LoginService: LoginServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
+    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
+        guard let user = userDataLoader.login(email: email, password: password) else {
+            onError("Ocurrió un error al iniciar sesión.\n")
+            return
+        }
+        
+        onSuccess(user.getLoginMessage(), user)
+    }
+    
     func validate(text: String, regexPattern: RegexPattern, onSuccess: (String) -> (), onError: (AppError) -> ()) {
         do {
             try RegexLint.validate(data: text, matchWith: regexPattern)
@@ -29,14 +38,5 @@ class LoginService: LoginServiceImplementation {
             
             onError(appError)
         }
-    }
-    
-    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
-        guard let user = userDataLoader.login(email: email, password: password) else {
-            onError("Ocurrió un error al iniciar sesión.\n")
-            return
-        }
-        
-        onSuccess(user.getLoginMessage(), user)
     }
 }

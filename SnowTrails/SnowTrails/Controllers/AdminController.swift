@@ -64,37 +64,37 @@ class AdminController: UserControllerImplementation {
     }
     
     private func addUser() {
-        var username = ""
-        var email = ""
+        var usernameInput = ""
+        var emailInput = ""
         
-        while username.isEmpty {
+        while usernameInput.isEmpty {
             print("Introduce el nombre del usuario que quieres añadir")
-            username = readLine() ?? ""
+            usernameInput = readLine() ?? ""
             
-            do {
-                try RegexLint.validate(data: username, matchWith: .username)
-            } catch {
-                username.removeAll()
-                print(AppError(from: error).errorDescription)
+            userService.validate(text: usernameInput, regexPattern: .username) {
+                usernameInput = $0
+            } onError: { appError in
+                usernameInput.removeAll()
+                print(appError.errorDescription)
             }
         }
         
-        while email.isEmpty {
+        while emailInput.isEmpty {
             print("Introduce el email del usuario que quieres añadir")
-            email = readLine() ?? ""
+            emailInput = readLine() ?? ""
             
-            do {
-                try RegexLint.validate(data: email, matchWith: .email)
-            } catch {
-                email.removeAll()
-                print(AppError(from: error).errorDescription)
+            userService.validate(text: emailInput, regexPattern: .email) {
+                emailInput = $0
+            } onError: { appError in
+                emailInput.removeAll()
+                print(appError.errorDescription)
             }
         }
         
         print("Introduce la contraseña del usuario que quieres añadir")
-        let password = readLine() ?? ""
+        let passwordInput = readLine() ?? ""
         
-        userService.addUser(username: username, email: email, password: password) { user in
+        userService.addUser(username: usernameInput, email: emailInput, password: passwordInput) { user in
             print(user.getAddUserMessage())
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
