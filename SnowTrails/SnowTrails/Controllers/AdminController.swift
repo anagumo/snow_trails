@@ -64,10 +64,33 @@ class AdminController: UserControllerImplementation {
     }
     
     private func addUser() {
-        print("Introduce el nombre del usuario que quieres añadir")
-        let username = readLine() ?? ""
-        print("Introduce el email del usuario que quieres añadir")
-        let email = readLine() ?? ""
+        var username = ""
+        var email = ""
+        
+        while username.isEmpty {
+            print("Introduce el nombre del usuario que quieres añadir")
+            username = readLine() ?? ""
+            
+            do {
+                try RegexLint.validate(data: username, matchWith: .username)
+            } catch {
+                username.removeAll()
+                print(AppError(from: error).errorDescription)
+            }
+        }
+        
+        while email.isEmpty {
+            print("Introduce el email del usuario que quieres añadir")
+            email = readLine() ?? ""
+            
+            do {
+                try RegexLint.validate(data: email, matchWith: .email)
+            } catch {
+                email.removeAll()
+                print(AppError(from: error).errorDescription)
+            }
+        }
+        
         print("Introduce la contraseña del usuario que quieres añadir")
         let password = readLine() ?? ""
         

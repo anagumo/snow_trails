@@ -14,11 +14,10 @@ enum RegexPattern: String {
 
 struct RegexLint {
     
-    static func validate(data: String, matchWith regexPattern: RegexPattern) throws -> Bool {
+    static func validate(data: String, matchWith regexPattern: RegexPattern) throws {
         let regex = try Regex(regexPattern.rawValue)
         guard data.contains(regex) else {
             throw AppError(from: regexPattern)
         }
-        return true
     }
 }
