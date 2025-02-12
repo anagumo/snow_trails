@@ -33,10 +33,6 @@ class SnowTrailsTesting {
             let userLoaded = userDataLoader.login(email: "regularuser@keepcoding.es", password: "Regularuser1")
             #expect(userLoaded != nil, "It is expected that the user is in the data source")
         }
-        
-        @Test func emailError() async throws {
-            
-        }
     }
     
     @Suite("Routes")
@@ -125,6 +121,38 @@ class SnowTrailsTesting {
             let isDeletionSuccess = userDataLoader.delete(username: "AriKeepCoder")
             
             #expect(!isDeletionSuccess, "It is expected to return false since there is no a user in the loader")
+        }
+    }
+    
+    @Suite("User Input")
+    struct InputTests {
+        
+        @Test func usernameError() async throws {
+            let badUsername = "ari123"
+            #expect(throws: AppError.username, performing: {
+                try RegexLint.validate(data: badUsername, matchWith: .username)
+            })
+        }
+        
+        @Test func usernameSuccess() async throws {
+            let coolUsername = "regularuser1"
+            #expect(throws: Never.self, performing: {
+                try RegexLint.validate(data: coolUsername, matchWith: .username)
+            })
+        }
+        
+        @Test func emailError() async throws {
+            let badEmail = "a_bad_email.es"
+            #expect(throws: AppError.email, performing: {
+                try RegexLint.validate(data: badEmail, matchWith: .email)
+            })
+        }
+        
+        @Test func emailSuccess() async throws {
+            let coolEmail = "ari@keepcoder.es"
+            #expect(throws: Never.self, performing: {
+                try RegexLint.validate(data: coolEmail, matchWith: .email)
+            })
         }
     }
 }
