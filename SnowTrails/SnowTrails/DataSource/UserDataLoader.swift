@@ -55,9 +55,9 @@ class UserDataLoader {
         }
     }
     
-    func login(emailInput: String, passwordInput: String) -> User? {
+    func login(email: String, password: String) -> User? {
         updateSession {
-            $0.email == emailInput && $0.password == passwordInput
+            $0.email == email && $0.password == password
         } completion: {
             $0.isLoggedIn
         }

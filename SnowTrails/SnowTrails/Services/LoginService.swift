@@ -8,7 +8,8 @@
 import Foundation
 
 protocol LoginServiceImplementation {
-    func login(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ())
+    func validateEmailInput(onSuccess: (String) -> (), onError: (AppError) -> ())
+    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ())
 }
 
 class LoginService: LoginServiceImplementation {
@@ -18,8 +19,26 @@ class LoginService: LoginServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
-    func login(emailInput: String, passwordInput: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
-        guard let user = userDataLoader.login(emailInput: emailInput, passwordInput: passwordInput) else {
+    func validateEmailInput(onSuccess: (String) -> (), onError: (AppError) -> ()) {
+        var email = ""
+        while email.isEmpty {
+            print("Ingresa tu email: ")
+            email = readLine() ?? ""
+            
+            // TODO: Research to improve the Regex linter.
+            do {
+                try RegexLint.validate(data: email, matchWith: .email)
+            } catch {
+                email.removeAll()
+                onError(AppError.email)
+            }
+        }
+        
+        onSuccess(email)
+    }
+    
+    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
+        guard let user = userDataLoader.login(email: email, password: password) else {
             onError("Ocurrió un error al iniciar sesión.\n")
             return
         }

@@ -33,6 +33,8 @@
 				Controllers/MenuController.swift,
 				Controllers/RegularUserController.swift,
 				Controllers/RoutesController.swift,
+				DataSource/Errors/AppError.swift,
+				DataSource/Errors/RegexLint.swift,
 				DataSource/JSONs/routes.json,
 				DataSource/JSONs/users.json,
 				DataSource/Models/Menu.swift,

@@ -51,26 +51,17 @@ class LoginController: LoginControllerImplementation {
     }
     
     private func login() {
-        var emailInput = ""
-        
-        while  emailInput.isEmpty {
-            print("Ingresa tu email: ")
-            emailInput = readLine() ?? ""
-            
-            // TODO: Research to improve the Regex linter.
-            // TODO: Should Regex validations be the responsibility of the controller or a service?
-            do {
-                try RegexLint.validate(data: emailInput, matchWith: .email)
-            } catch {
-                emailInput.removeAll()
-                print(AppError(from: error).errorDescription)
-            }
+        var email = ""
+        loginService.validateEmailInput {
+            email = $0
+        } onError: { appError in
+            print(appError.errorDescription)
         }
         
         print("Ingresa tu contraseña: ")
-        let passwordInput = readLine() ?? ""
+        let password = readLine() ?? ""
         
-        loginService.login(emailInput: emailInput, passwordInput: passwordInput) { successMessage, user in
+        loginService.login(email: email, password: password) { successMessage, user in
             quitLogin = user.isLoggedIn
             print(successMessage)
             loginControllerDelegate?.onLoginSuccess(user: user)

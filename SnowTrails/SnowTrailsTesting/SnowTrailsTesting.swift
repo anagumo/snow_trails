@@ -25,12 +25,12 @@ class SnowTrailsTesting {
         }
         
         @Test func loginError() async throws {
-            let userLoaded = userDataLoader.login(emailInput: "ari@keepcoding.es", passwordInput: "Regularuser2")
+            let userLoaded = userDataLoader.login(email: "ari@keepcoding.es", password: "Regularuser2")
             #expect(userLoaded == nil, "It is expected that the user is not in the data source")
         }
         
         @Test func loginSuccess() async throws {
-            let userLoaded = userDataLoader.login(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1")
+            let userLoaded = userDataLoader.login(email: "regularuser@keepcoding.es", password: "Regularuser1")
             #expect(userLoaded != nil, "It is expected that the user is in the data source")
         }
     }
@@ -86,7 +86,7 @@ class SnowTrailsTesting {
         }
         
         @Test func logoutSuccess() async throws {
-            guard let userLoggedIn = userDataLoader.login(emailInput: "regularuser@keepcoding.es", passwordInput: "Regularuser1") else {
+            guard let userLoggedIn = userDataLoader.login(email: "regularuser@keepcoding.es", password: "Regularuser1") else {
                 return
             }
             guard let userLoggedOut = userDataLoader.logout(userId: userLoggedIn.id) else {
