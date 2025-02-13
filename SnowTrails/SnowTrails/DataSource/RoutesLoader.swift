@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 class RoutesLoader {
     var routes: [Route]
@@ -14,7 +15,7 @@ class RoutesLoader {
         routes = []
         
         guard let loadedRoutes = loadRoutes(from: testData) else {
-            print("Unable to load routes in the initializer of RoutesLoader")
+            Logger.developerLog.error("Unable to load routes in the initializer of RoutesLoader")
             return
         }
         
@@ -29,14 +30,14 @@ class RoutesLoader {
                 data = testData
             } else {
                 guard let filePath = Bundle.main.path(forResource: "routes", ofType: "json", inDirectory: "DataSource/resources") else {
-                    print("Error: No se encontró el archivo routes.json en el bundle.")
+                    Logger.developerLog.error("Error: No se encontró el archivo routes.json en el bundle.")
                     return nil
                 }
                 
                 let url = URL(fileURLWithPath: filePath)
                 
                 guard FileManager.default.fileExists(atPath: url.path) else {
-                    print("Error: No se encontró el archivo routes.json en la ruta.")
+                    Logger.developerLog.error("Error: No se encontró el archivo routes.json en la ruta.")
                     return nil
                 }
                 
@@ -47,7 +48,7 @@ class RoutesLoader {
             let routesResponse = try decoder.decode(RoutesResponse.self, from: data)
             return routesResponse.routes
         } catch {
-            print("Error al cargar o decodificar routes.json: \(error)")
+            Logger.developerLog.error("Error al cargar o decodificar routes.json: \(error)")
             return nil
         }
     }

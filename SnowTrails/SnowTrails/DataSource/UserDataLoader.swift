@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 // To code this clase I followed the instructions on Base Testing project
 // It also copy the file into Build Phases to set the subpath
@@ -16,7 +17,7 @@ class UserDataLoader {
         users = []
         
         guard let loadedUsers = loadUsers(from: testData) else {
-            print("Unable to load users in the initializer of UserDataLoader")
+            Logger.developerLog.error("Unable to load users in the initializer of UserDataLoader")
             return
         }
         
@@ -31,14 +32,14 @@ class UserDataLoader {
                 data = testData
             } else {
                 guard let filepath =  Bundle.main.path(forResource: "users", ofType: "json", inDirectory: "DataSource/resources") else {
-                    print("Error: No se encontró el archivo users.json en el bundle.")
+                    Logger.developerLog.error("Error: No se encontró el archivo users.json en el bundle.")
                     return nil
                 }
                 
                 let url = URL(fileURLWithPath: filepath)
                 
                 guard FileManager.default.fileExists(atPath: url.path) else {
-                    print("Error: No se encontró el archivo users.json en la ruta.")
+                    Logger.developerLog.error("Error: No se encontró el archivo users.json en la ruta.")
                     return nil
                 }
                 
@@ -50,7 +51,7 @@ class UserDataLoader {
             return userResponse.users
             
         } catch {
-            print("Error al cargar o decodificar users.json: \(error)")
+            Logger.developerLog.error("Error al cargar o decodificar users.json: \(error)")
             return nil
         }
     }

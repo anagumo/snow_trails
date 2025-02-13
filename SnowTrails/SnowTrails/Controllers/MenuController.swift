@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol MenuControllerImplementation {
     func open()
@@ -49,7 +50,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     func displayUserMenu(textMenu: String) {
         guard let user else {
-            print("No se encontró el usuario")
+            Logger.developerLog.error("No se encontró el usuario")
             return
         }
         regularUserController.open(textMenu: textMenu, user: user)
@@ -57,7 +58,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     func displayAdminMenu(textMenu: String) {
         guard let user else {
-            print("No se encontró el usuario")
+            Logger.developerLog.error("No se encontró el usuario")
             return
         }
         adminController.open(textMenu: textMenu, user: user)
@@ -74,7 +75,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
             menu?.getMenu(.Admin)
         default:
             // TODO: Complementary - Handle error
-            print("Tipo de usuario no identificado")
+            Logger.developerLog.error("Tipo de usuario no identificado")
         }
     }
     

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 class AdminController: UserControllerImplementation {
     private let userService: UserService
@@ -25,7 +26,7 @@ class AdminController: UserControllerImplementation {
         isLoggedIn = user.isLoggedIn
         
         while isLoggedIn {
-            print(textMenu)
+            Logger.userLog.log("\(textMenu)")
             
             if let adminOption = AdminOption(from: readLine() ?? nil) {
                 switch adminOption {
@@ -36,13 +37,13 @@ class AdminController: UserControllerImplementation {
                 case .DeleteUser:
                     deleteUser()
                 case .AddPointToRoute:
-                    print("Esta funcionalidad no está implementada\n")
+                    Logger.userLog.warning("Esta funcionalidad no está implementada")
                 case .Logout:
                     logout(userId: user.id)
                 }
             } else {
                 // TODO: Complementary - Handle error
-                print("Opción inválida\n")
+                Logger.userLog.error("Opción inválida")
             }
         }
     }
@@ -53,13 +54,13 @@ class AdminController: UserControllerImplementation {
                 let usersText = try users.reduce("") {
                     return $0 + (try $1.getDescription()) + "\n"
                 }
-                print(usersText)
+                Logger.userLog.log("\(usersText)")
             } catch {
-                print(AppError(from: error).errorDescription)
+                Logger.userLog.error("\(AppError(from: error).errorDescription)")
             }
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
     
@@ -68,60 +69,60 @@ class AdminController: UserControllerImplementation {
         var emailInput = ""
         
         while usernameInput.isEmpty {
-            print("Introduce el nombre del usuario que quieres añadir")
+            Logger.userLog.log("Introduce el nombre del usuario que quieres añadir")
             usernameInput = readLine() ?? ""
             
             userService.validate(text: usernameInput, regexPattern: .username) {
                 usernameInput = $0
             } onError: { appError in
                 usernameInput.removeAll()
-                print(appError.errorDescription)
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
         
         while emailInput.isEmpty {
-            print("Introduce el email del usuario que quieres añadir")
+            Logger.userLog.log("Introduce el email del usuario que quieres añadir")
             emailInput = readLine() ?? ""
             
             userService.validate(text: emailInput, regexPattern: .email) {
                 emailInput = $0
             } onError: { appError in
                 emailInput.removeAll()
-                print(appError.errorDescription)
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
         
-        print("Introduce la contraseña del usuario que quieres añadir")
+        Logger.userLog.log("Introduce la contraseña del usuario que quieres añadir")
         let passwordInput = readLine() ?? ""
         
         userService.addUser(username: usernameInput, email: emailInput, password: passwordInput) { user in
-            print(user.getAddUserMessage())
+            Logger.userLog.info("\(user.getAddUserMessage())")
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
     
     private func deleteUser() {
-        print("Introduce el nombre del usuario que quieras eliminar")
+        Logger.userLog.log("Introduce el nombre del usuario que quieras eliminar")
         let username = readLine() ?? ""
         
         userService.deleteUser(username: username) {
-            print("Usuario eliminado satisfactoriamente\n")
+            Logger.userLog.info("Usuario eliminado satisfactoriamente")
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
     
     func logout(userId: String) {
-        userService.logout(userId: userId) { onSuccessMessage in
+        userService.logout(userId: userId) { successMessage in
             isLoggedIn = false
-            print(onSuccessMessage)
+            Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLogoutSuccess()
         } onError: { errorMessage in
             // TODO: Complementary - Handle error
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
 }

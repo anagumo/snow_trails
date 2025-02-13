@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol LoginControllerImplementation {
     func open(textMenu: String)
@@ -34,7 +35,7 @@ class LoginController: LoginControllerImplementation {
     
     func open(textMenu: String) {
         while !quitLogin {
-            print(textMenu)
+            Logger.userLog.log("\(textMenu)")
             
             if let loginOption = LoginOption(from: readLine() ?? nil) {
                 switch loginOption {
@@ -45,7 +46,7 @@ class LoginController: LoginControllerImplementation {
                 }
             } else {
                 //TODO: Complementary - Handle Menu error
-                print("Opción inválida\n")
+                Logger.userLog.error(("Opción inválida\n"))
             }
         }
     }
@@ -53,27 +54,27 @@ class LoginController: LoginControllerImplementation {
     private func login() {
         var emailInput = ""
         while emailInput.isEmpty {
-            print("Ingresa tu email: ")
+            Logger.userLog.log("Ingresa tu email: ")
             emailInput = readLine() ?? ""
             
             loginService.validate(text: emailInput, regexPattern: .email) {
                 emailInput = $0
             } onError: { appError in
                 emailInput.removeAll()
-                print(appError.errorDescription)
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
         
-        print("Ingresa tu contraseña: ")
+        Logger.userLog.log("Ingresa tu contraseña: ")
         let passwordInput = readLine() ?? ""
         
         loginService.login(email: emailInput, password: passwordInput) { successMessage, user in
             quitLogin = user.isLoggedIn
-            print(successMessage)
+            Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLoginSuccess(user: user)
         } onError: { errorMessage in
             // TODO: Complemetary - Handle Login error
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
 }

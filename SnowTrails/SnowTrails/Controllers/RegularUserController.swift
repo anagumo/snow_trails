@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol UserControllerImplementation {
     func open(textMenu: String, user: User)
@@ -31,31 +32,31 @@ class RegularUserController: UserControllerImplementation {
         isLoggedIn = user.isLoggedIn
         
         while isLoggedIn {
-            print(textMenu)
+            Logger.userLog.log("\(textMenu)")
             
             if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
                 switch regularUserOption {
                 case .Routes:
                     routesController.getRoutes()
                 case .ShortRoute:
-                    print("Esta funcionalidad no está implementada")
+                    Logger.userLog.warning("Esta funcionalidad no está implementada")
                 case .Logout:
                     logout(userId: user.id)
                 }
             } else {
                 //TODO: Complementary - Handle Menu error
-                print("Opción inválida\n")
+                Logger.userLog.error("Opción inválida")
             }
         }
     }
     
     private func logout(userId: String) {
-        userService.logout(userId: userId) { onSuccessMessage in
+        userService.logout(userId: userId) { successMessage in
             isLoggedIn = false
-            print(onSuccessMessage)
+            Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLogoutSuccess()
         } onError: { errorMessage in
-            print(errorMessage)
+            Logger.userLog.error("\(errorMessage)")
         }
     }
 }

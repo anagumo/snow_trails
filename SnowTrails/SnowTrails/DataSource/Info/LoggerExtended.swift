@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import OSLog
+
+extension Logger {
+    static let userLog = Logger(subsystem: "SnowTrails", category: "UserLogs")
+    static let developerLog = Logger(subsystem: "SnowTrails", category: "DeveloperLogs")
+}

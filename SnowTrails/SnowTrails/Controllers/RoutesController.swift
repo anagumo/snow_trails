@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol RoutesControllerImplementation {
     func getRoutes()
@@ -19,7 +20,8 @@ class RoutesController: RoutesControllerImplementation {
     }
     
     func getRoutes() {
-        print(getRoutesFormatted())
+        let routesFormatted = getRoutesFormatted()
+        Logger.userLog.log("\(routesFormatted)")
     }
     
     private func getRoutesFormatted() -> String {
