@@ -15,7 +15,7 @@ class RoutesLoader {
         routes = []
         
         guard let loadedRoutes = loadRoutes(from: testData) else {
-            Logger.developerLog.error("Unable to load routes in the initializer of RoutesLoader")
+            Logger.developerLog.error("Error: ocurrió un error al cargar las rutas en el init de RoutesLoader")
             return
         }
         
@@ -48,7 +48,7 @@ class RoutesLoader {
             let routesResponse = try decoder.decode(RoutesResponse.self, from: data)
             return routesResponse.routes
         } catch {
-            Logger.developerLog.error("Error al cargar o decodificar routes.json: \(error)")
+            Logger.developerLog.error("Error: Ocurrio un error al cargar o decodificar routes.json: \(error)")
             return nil
         }
     }

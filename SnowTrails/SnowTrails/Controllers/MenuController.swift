@@ -50,7 +50,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     func displayUserMenu(textMenu: String) {
         guard let user else {
-            Logger.developerLog.error("No se encontró el usuario")
+            Logger.developerLog.error("Error: ocurrió un error al guardar el usuario")
             return
         }
         regularUserController.open(textMenu: textMenu, user: user)
@@ -58,7 +58,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     func displayAdminMenu(textMenu: String) {
         guard let user else {
-            Logger.developerLog.error("No se encontró el usuario")
+            Logger.developerLog.error("Error: ocurrió un error al guardar el usuario")
             return
         }
         adminController.open(textMenu: textMenu, user: user)
@@ -74,8 +74,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
         case .admin:
             menu?.getMenu(.Admin)
         default:
-            // TODO: Complementary - Handle error
-            Logger.developerLog.error("Tipo de usuario no identificado")
+            Logger.developerLog.error("Error: ocurrió un error al obtener el rol del usuario")
         }
     }
     
