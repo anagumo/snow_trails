@@ -76,7 +76,7 @@ enum LoginOption: String, CaseIterable {
     case LoginAdmin = "Acceder como administrador"
     case Quit = "Salir"
     
-    init?(from input: String?) {
+    init(from input: String) throws {
         switch input {
         case "1":
             self = .LoginUser
@@ -85,7 +85,7 @@ enum LoginOption: String, CaseIterable {
         case "3":
             self = .Quit
         default:
-            return nil
+            throw AppError.menu
         }
     }
 }
@@ -95,7 +95,7 @@ enum RegularUserOption: String, CaseIterable {
     case ShortRoute = "Obtener la ruta más corta entre dos puntos"
     case Logout = "Cerrar sesión"
     
-    init?(from input: String?) {
+    init(from input: String) throws {
         switch input {
         case "1":
             self = .Routes
@@ -104,7 +104,7 @@ enum RegularUserOption: String, CaseIterable {
         case "3":
             self = .Logout
         default:
-            return nil
+            throw AppError.menu
         }
     }
 }
@@ -116,7 +116,7 @@ enum AdminOption: String, CaseIterable {
     case AddPointToRoute = "Añadir punto a ruta"
     case Logout = "Cerrar sesión"
     
-    init?(from input: String?) {
+    init(from input: String) throws {
         switch input {
         case "1":
             self = .Users
@@ -129,7 +129,7 @@ enum AdminOption: String, CaseIterable {
         case "5":
             self = .Logout
         default:
-            return nil
+            throw AppError.menu
         }
     }
 }

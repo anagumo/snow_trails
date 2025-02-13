@@ -8,6 +8,7 @@
 import Foundation
 
 enum AppError: Error, LocalizedError {
+    case menu
     case login
     case role
     case username
@@ -33,6 +34,8 @@ enum AppError: Error, LocalizedError {
     
     var errorDescription: String {
         switch self {
+        case .menu:
+            return "Opción inválida"
         case .login:
             return "Ocurrió un error al iniciar sesión"
         case .role:

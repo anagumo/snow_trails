@@ -28,7 +28,8 @@ class AdminController: UserControllerImplementation {
         while isLoggedIn {
             Logger.userLog.log("\(textMenu)")
             
-            if let adminOption = AdminOption(from: readLine() ?? nil) {
+            do {
+                let adminOption = try AdminOption(from: readLine() ?? "")
                 switch adminOption {
                 case .Users:
                     getUsers()
@@ -41,9 +42,11 @@ class AdminController: UserControllerImplementation {
                 case .Logout:
                     logout(userId: user.id)
                 }
-            } else {
-                // TODO: Complementary - Handle error
-                Logger.userLog.error("Opción inválida")
+            } catch {
+                guard let appError = error as? AppError else {
+                    return Logger.userLog.error("\(AppError.unknown.errorDescription)")
+                }
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
     }

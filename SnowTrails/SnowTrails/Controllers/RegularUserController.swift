@@ -34,7 +34,8 @@ class RegularUserController: UserControllerImplementation {
         while isLoggedIn {
             Logger.userLog.log("\(textMenu)")
             
-            if let regularUserOption = RegularUserOption(from: readLine() ?? nil) {
+            do {
+                let regularUserOption = try RegularUserOption(from: readLine() ?? "")
                 switch regularUserOption {
                 case .Routes:
                     routesController.getRoutes()
@@ -43,9 +44,11 @@ class RegularUserController: UserControllerImplementation {
                 case .Logout:
                     logout(userId: user.id)
                 }
-            } else {
-                //TODO: Complementary - Handle Menu error
-                Logger.userLog.error("Opción inválida")
+            } catch {
+                guard let appError = error as? AppError else {
+                    return Logger.userLog.error("\(AppError.unknown.errorDescription)")
+                }
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
     }

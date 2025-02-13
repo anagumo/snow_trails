@@ -37,16 +37,19 @@ class LoginController: LoginControllerImplementation {
         while !quitLogin {
             Logger.userLog.log("\(textMenu)")
             
-            if let loginOption = LoginOption(from: readLine() ?? nil) {
+            do {
+                let loginOption = try LoginOption(from: readLine() ?? "")
                 switch loginOption {
                 case .LoginUser, .LoginAdmin:
                     login()
                 case .Quit:
                     quitLogin = true
                 }
-            } else {
-                //TODO: Complementary - Handle Menu error
-                Logger.userLog.error(("Opción inválida\n"))
+            } catch {
+                guard let appError = error as? AppError else {
+                    return Logger.userLog.error("\(AppError.unknown.errorDescription)")
+                }
+                Logger.userLog.error("\(appError.errorDescription)")
             }
         }
     }
