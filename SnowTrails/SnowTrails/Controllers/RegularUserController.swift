@@ -44,11 +44,10 @@ class RegularUserController: UserControllerImplementation {
                 case .Logout:
                     logout(userId: user.id)
                 }
+            } catch let error as AppError {
+                Logger.userLog.error("\(error.errorDescription)")
             } catch {
-                guard let appError = error as? AppError else {
-                    return Logger.userLog.error("\(AppError.unknown.errorDescription)")
-                }
-                Logger.userLog.error("\(appError.errorDescription)")
+                Logger.userLog.error("\(AppError.unknown.errorDescription)")
             }
         }
     }
