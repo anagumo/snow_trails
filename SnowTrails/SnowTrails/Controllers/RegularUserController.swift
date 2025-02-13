@@ -57,8 +57,8 @@ class RegularUserController: UserControllerImplementation {
             isLoggedIn = false
             Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLogoutSuccess()
-        } onError: { errorMessage in
-            Logger.userLog.error("\(errorMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
 }

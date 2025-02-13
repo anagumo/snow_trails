@@ -64,17 +64,4 @@ struct User: Codable, Hashable {
         
         return role
     }
-    
-    // MARK: Success messages
-    func getLoginMessage() -> String {
-        guard let role else {
-            return "Has iniciado sesión correctamente\n"
-        }
-        
-        return "Has iniciado sesión correctamente como usuario \(role)\n"
-    }
-    
-    func getAddUserMessage() -> String {
-        "Usuario \(username) con email \(email) añadido satisfactoriamente\n"
-    }
 }

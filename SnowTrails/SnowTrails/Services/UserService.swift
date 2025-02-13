@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import OSLog
 
 protocol UserServiceImplementation: RegexLintDelegate {
-    func getAll(onSuccess: ([User]) -> (), onError: (String) -> ())
-    func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ())
-    func deleteUser(username: String, onSuccess: () -> (), onError: (String) -> ())
-    func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ())
+    func getAll(onSuccess: ([User]) -> (), onError: (AppError) -> ())
+    func addUser(username: String, email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ())
+    func deleteUser(username: String, onSuccess: (String) -> (), onError: (AppError) -> ())
+    func logout(userId: String, onSuccess: (String) -> (), onError: (AppError) -> ())
 }
 
 class UserService: UserServiceImplementation {
@@ -21,40 +22,45 @@ class UserService: UserServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
-    func getAll(onSuccess: ([User]) -> (), onError: (String) -> ()) {
+    func getAll(onSuccess: ([User]) -> (), onError: (AppError) -> ()) {
         guard !userDataLoader.getAll().isEmpty else {
-            return onError("No se encontraron usuarios en la base de datos\n")
+            Logger.developerLog.error("Error: el programa debe tener al menos dos usuarios por defecto")
+            return
         }
         
         onSuccess(userDataLoader.getAll())
     }
     
-    func addUser(username: String, email: String, password: String, onSuccess: (User) -> (), onError: (String) -> ()) {
-        guard let userAdded = userDataLoader.add(username: username, email: email, password: password) else {
-            return onError("Ocurrió un error al agregar el usuario\n")
+    func addUser(username: String, email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ()) {
+        guard let user = userDataLoader.add(username: username, email: email, password: password) else {
+            onError(AppError.addUser)
+            return
         }
         
-        onSuccess(userAdded)
+        onSuccess("Usuario \(user.username) con email \(user.email) añadido satisfactoriamente\n", user)
     }
     
-    func deleteUser(username: String, onSuccess: () -> (), onError: (String) -> ()) {
+    func deleteUser(username: String, onSuccess: (String) -> (), onError: (AppError) -> ()) {
         guard userDataLoader.delete(username: username) else {
-            return onError("Ocurrió un error, el usuario que deseas eliminar no existe\n")
+            onError(AppError.deleteUser)
+            return
         }
         
-        onSuccess()
+        onSuccess("Usuario eliminado satisfactoriamente")
     }
     
-    func logout(userId: String, onSuccess: (String) -> (), onError: (String) -> ()) {
+    func logout(userId: String, onSuccess: (String) -> (), onError: (AppError) -> ()) {
         guard let user = userDataLoader.logout(userId: userId) else {
-            return onError("No se encontró el usuario\n")
+            Logger.developerLog.error("Error: no se pudo cerrar la sesión, el usuario no existe en el Loader")
+            return
         }
         
         guard !user.isLoggedIn else {
-            return onError("Ocurrió un error al cerrar la sesión\n")
+            onError(AppError.logout)
+            return
         }
         
-        onSuccess("La sesión se ha cerrado correctamente\n")
+        onSuccess("La sesión se ha cerrado satisfactoriamente")
     }
     
     
@@ -65,7 +71,8 @@ class UserService: UserServiceImplementation {
             onSuccess(text)
         } catch {
             guard let appError = error as? AppError else {
-                return onError(AppError.unknown)
+                onError(AppError.unknown)
+                return
             }
             
             onError(appError)

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import OSLog
 
 protocol LoginServiceImplementation: RegexLintDelegate {
-    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ())
+    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ())
 }
 
 class LoginService: LoginServiceImplementation {
@@ -18,13 +19,18 @@ class LoginService: LoginServiceImplementation {
         self.userDataLoader = userDataLoader
     }
     
-    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (String) -> ()) {
+    func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ()) {
         guard let user = userDataLoader.login(email: email, password: password) else {
-            onError("Ocurrió un error al iniciar sesión.\n")
+            onError(AppError.login)
             return
         }
         
-        onSuccess(user.getLoginMessage(), user)
+        guard let role = user.role else {
+            Logger.developerLog.error("Error: ocurrió un error al obtener el rol del usuario")
+            return
+        }
+        
+        onSuccess("Has iniciado sesión satisfactoriamente como usuario \(role)\n", user)
     }
     
     // MARK: RegexLint delegate functions
@@ -32,12 +38,10 @@ class LoginService: LoginServiceImplementation {
         do {
             try RegexLint.validate(data: text, matchWith: regexPattern)
             onSuccess(text)
+        } catch let error as AppError {
+            return onError(error)
         } catch {
-            guard let appError = error as? AppError else {
-                return onError(AppError.unknown)
-            }
-            
-            onError(appError)
+            return onError(AppError.unknown)
         }
     }
 }

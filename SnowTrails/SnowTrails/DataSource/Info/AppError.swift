@@ -13,6 +13,9 @@ enum AppError: Error, LocalizedError {
     case role
     case username
     case email
+    case addUser
+    case deleteUser
+    case logout
     case unknown
     
     init(from error: Error) {
@@ -35,17 +38,23 @@ enum AppError: Error, LocalizedError {
     var errorDescription: String {
         switch self {
         case .menu:
-            return "Opción inválida"
+            return "Error: opción inválida, elige una opción del menú"
         case .login:
-            return "Ocurrió un error al iniciar sesión"
+            return "Error: no se pudo iniciar la sesión"
         case .role:
-            return "Error: No se pudo obtener el rol del usuario"
-        case .unknown:
-            return "Error: Ocurrió un error desconocido"
+            return "Error: no se pudo obtener el rol del usuario"
         case .username:
-            return "Error: El nombre de usuario debe tener entre 8 y 24 carácteres"
+            return "Error: el nombre de usuario debe tener entre 8 y 24 carácteres"
         case .email:
-            return "Error: El email deber tener la forma xxxxx@xxxxx.zz donde {xxx} puede ser cualquier carácter, mayúscula, minúscula o número y {zz} puede ser .es o .com"
+            return "Error: el email deber tener la forma xxxxx@xxxxx.zz donde {xxx} puede ser cualquier carácter, mayúscula, minúscula o número y {zz} puede ser .es o .com"
+        case .addUser:
+            return "Error: no se pudo añadir al usuario"
+        case .deleteUser:
+            return "Error: el usuario que deseas eliminar no existe\n"
+        case .logout:
+            return "Error: no se pudo cerrar la sesión"
+        case .unknown:
+            return "Error: desconocido"
         }
     }
 }

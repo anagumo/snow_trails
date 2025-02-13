@@ -60,9 +60,8 @@ class AdminController: UserControllerImplementation {
             } catch {
                 Logger.userLog.error("\(AppError(from: error).errorDescription)")
             }
-        } onError: { errorMessage in
-            // TODO: Complementary - Handle error
-            Logger.userLog.error("\(errorMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
     
@@ -97,11 +96,10 @@ class AdminController: UserControllerImplementation {
         Logger.userLog.log("Introduce la contraseña del usuario que quieres añadir")
         let passwordInput = readLine() ?? ""
         
-        userService.addUser(username: usernameInput, email: emailInput, password: passwordInput) { user in
-            Logger.userLog.info("\(user.getAddUserMessage())")
-        } onError: { errorMessage in
-            // TODO: Complementary - Handle error
-            Logger.userLog.error("\(errorMessage)")
+        userService.addUser(username: usernameInput, email: emailInput, password: passwordInput) { successMessage, user in
+            Logger.userLog.info("\(successMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
     
@@ -109,11 +107,10 @@ class AdminController: UserControllerImplementation {
         Logger.userLog.log("Introduce el nombre del usuario que quieras eliminar")
         let username = readLine() ?? ""
         
-        userService.deleteUser(username: username) {
-            Logger.userLog.info("Usuario eliminado satisfactoriamente")
-        } onError: { errorMessage in
-            // TODO: Complementary - Handle error
-            Logger.userLog.error("\(errorMessage)")
+        userService.deleteUser(username: username) { succesMessage in
+            Logger.userLog.info("\(succesMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
     
@@ -122,9 +119,8 @@ class AdminController: UserControllerImplementation {
             isLoggedIn = false
             Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLogoutSuccess()
-        } onError: { errorMessage in
-            // TODO: Complementary - Handle error
-            Logger.userLog.error("\(errorMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
 }

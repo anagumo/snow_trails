@@ -74,9 +74,8 @@ class LoginController: LoginControllerImplementation {
             quitLogin = user.isLoggedIn
             Logger.userLog.info("\(successMessage)")
             loginControllerDelegate?.onLoginSuccess(user: user)
-        } onError: { errorMessage in
-            // TODO: Complemetary - Handle Login error
-            Logger.userLog.error("\(errorMessage)")
+        } onError: { appError in
+            Logger.userLog.error("\(appError.errorDescription)")
         }
     }
 }
