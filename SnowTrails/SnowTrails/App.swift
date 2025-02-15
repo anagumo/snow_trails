@@ -10,6 +10,7 @@ import Foundation
 class App {
     private var menuController: MenuControllerImplementation
     
+    // App has the responsability of create all instances used in the app
     init() {
         let userDataLoader = UserDataLoader()
         let loginService = LoginService(userDataLoader: userDataLoader)
@@ -26,6 +27,6 @@ class App {
     }
     
     func run() {
-        menuController.open()
+        menuController.open() // The flow starts
     }
 }

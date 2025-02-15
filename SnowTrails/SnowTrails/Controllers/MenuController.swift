@@ -35,10 +35,12 @@ class MenuController: MenuControllerImplementation {
     
     // MARK: Main
     func open() {
+        // I set MenuController as delegate of these controllers to comunicate back some states
         loginController.loginControllerDelegate = self
         regularUserController.loginControllerDelegate = self
         adminController.loginControllerDelegate = self
-        menu?.getMenu(.Login)
+        
+        menu?.getMenu(.Login) // The first menu by default is the Login, which is the beginning of the app.
     }
 }
 
