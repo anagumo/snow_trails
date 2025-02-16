@@ -38,6 +38,7 @@ class LoginController: LoginControllerImplementation {
         while !quitLogin {
             Logger.userLog.log("\(textMenu)")
             
+            // Creates the LoginOption and handles the error
             do {
                 let loginOption = try LoginOption(from: readLine() ?? "")
                 switch loginOption {
@@ -60,6 +61,7 @@ class LoginController: LoginControllerImplementation {
             Logger.userLog.log("Ingresa tu email: ")
             emailInput = readLine() ?? ""
             
+            // Validates the email regex pattern
             loginService.validate(text: emailInput, regexPattern: .email) {
                 emailInput = $0
             } onError: { appError in
@@ -71,6 +73,7 @@ class LoginController: LoginControllerImplementation {
         Logger.userLog.log("Ingresa tu contraseña: ")
         let passwordInput = readLine() ?? ""
         
+        // After the data is validated, the login is performed
         loginService.login(email: emailInput, password: passwordInput) { successMessage, user in
             quitLogin = user.isLoggedIn
             Logger.userLog.info("\(successMessage)")

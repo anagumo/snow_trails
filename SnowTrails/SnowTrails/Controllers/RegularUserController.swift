@@ -8,6 +8,7 @@
 import Foundation
 import OSLog
 
+// User controllers shares this protocol
 protocol UserControllerImplementation {
     func open(textMenu: String, user: User)
     var loginControllerDelegate: LoginControllerDelegate? { get set }
@@ -34,6 +35,7 @@ class RegularUserController: UserControllerImplementation {
         while isLoggedIn {
             Logger.userLog.log("\(textMenu)")
             
+            // Creates the RegularUserOption and handles the error
             do {
                 let regularUserOption = try RegularUserOption(from: readLine() ?? "")
                 switch regularUserOption {

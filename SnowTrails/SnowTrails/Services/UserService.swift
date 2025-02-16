@@ -9,6 +9,7 @@ import Foundation
 import OSLog
 
 protocol UserServiceImplementation: RegexLintDelegate {
+    // I implemented onSuccess and onError closures to communicate those states back
     func getAll(onSuccess: ([User]) -> (), onError: (AppError) -> ())
     func addUser(username: String, email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ())
     func deleteUser(username: String, onSuccess: (String) -> (), onError: (AppError) -> ())

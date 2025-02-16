@@ -31,20 +31,21 @@ class MenuController: MenuControllerImplementation {
     }
     
     // MARK: Main
+    /// Implementation of the SnowTrails where the user can see  routes easy and fast.
     func open() {
         // I set MenuController as delegate of these controllers to comunicate back when user closes it sesion
         loginController.loginControllerDelegate = self
         regularUserController.loginControllerDelegate = self
         adminController.loginControllerDelegate = self
         
-        generateMenu() // The first menu by default is the Login, which is the beginning of the app.
+        buildMenu() // The first menu by default is the Login, which is the beginning of the app.
     }
     
     // MARK: Menu functions
-    /// Generates a menu
-    /// - Parameter menuType: the selected menu type, as default is .login
-    private func generateMenu(_ menuType: MenuType = .login) {
-        switch menuType {
+    /// Builds a menu
+    /// - Parameter type: an enum case of type (`MenuType`),
+    private func buildMenu(_ type: MenuType = .login) {
+        switch type {
         case .login:
             displayLoginMenu()
         case .regularUser:
@@ -101,12 +102,12 @@ extension MenuController: LoginControllerDelegate {
     func onLoginSuccess(user: User) {
         self.user = user // I need to set the user globally so it can be accessed in other controllers
         
-        // Given the user's rol I trigger the rigth menu
+        // Given the user's rol, I trigger the rigth menu
         switch user.role {
         case .regular:
-            generateMenu(.regularUser)
+            buildMenu(.regularUser)
         case .admin:
-            generateMenu(.admin)
+            buildMenu(.admin)
         default:
             Logger.developerLog.error("Error: ocurrió un error al obtener el rol del usuario")
         }
@@ -116,6 +117,6 @@ extension MenuController: LoginControllerDelegate {
     func onLogoutSuccess() {
         user = nil
         loginController.quitLogin = false // Reset the data of LoginController to prevent the app from closing
-        generateMenu(.login)
+        buildMenu(.login)
     }
 }

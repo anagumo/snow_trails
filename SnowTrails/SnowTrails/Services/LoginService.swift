@@ -9,6 +9,7 @@ import Foundation
 import OSLog
 
 protocol LoginServiceImplementation: RegexLintDelegate {
+    // I implemented onSuccess and onError closures to communicate those states back
     func login(email: String, password: String, onSuccess: (String, User) -> (), onError: (AppError) -> ())
 }
 

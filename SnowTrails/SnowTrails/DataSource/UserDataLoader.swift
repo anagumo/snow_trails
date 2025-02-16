@@ -56,6 +56,11 @@ class UserDataLoader {
         }
     }
     
+    /// Updates the user's session to true
+    /// - Parameters:
+    ///   - email: a text of type (`String`) that represent the email of the user
+    ///   - password: a text of type (`String`) that represent the password of the user
+    /// - Returns: an optional, if the user is found in the loader the function returns a (`User`), else returns nil
     func login(email: String, password: String) -> User? {
         updateSession {
             $0.email == email && $0.password == password
@@ -64,6 +69,9 @@ class UserDataLoader {
         }
     }
     
+    /// Updates the user's session to false
+    /// - Parameter userId: a text of type (`String`) that represent the id of the user
+    /// - Returns: an optional, if the user is found in the loader the function returns a (`User`), else returns nil
     func logout(userId: String) -> User? {
         updateSession {
             $0.id == userId
@@ -72,6 +80,7 @@ class UserDataLoader {
         }
     }
     
+    // I created a closure that is used by both the login and logout functions
     private func updateSession(predicate: (User) -> Bool, completion: (User) -> Bool) -> User? {
         users = users.compactMap {
             guard predicate($0) else {
@@ -92,6 +101,12 @@ class UserDataLoader {
         users
     }
     
+    /// Creates a user in the loader
+    /// - Parameters:
+    ///   - username: a text of type (`String`) that represent the username of the user
+    ///   - email: a text of type (`String`) that represent the email of the user
+    ///   - password: a test of type (`String`) that represent the password of the user
+    /// - Returns: an optional, if the user is found in the loader the function returns a (`User`); otherwise, returns nil
     func add(username: String, email: String, password: String) -> User? {
         guard let lastUserId = Int(users.last?.id ?? "") else {
             return nil
@@ -103,6 +118,9 @@ class UserDataLoader {
         return user
     }
     
+    /// Deletes a user in the loader
+    /// - Parameter username: a text of type (`String`) that represent the username of the user
+    /// - Returns: A boolean: is true if the loader contains the user and is deleted; otherwise, it returns false
     func delete(username: String) -> Bool {
         let hasUser = users.contains { user in
             user.username == username

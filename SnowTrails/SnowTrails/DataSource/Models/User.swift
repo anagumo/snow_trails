@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Representation of the user type
 enum UserType: String, Codable {
     case regular
     case admin

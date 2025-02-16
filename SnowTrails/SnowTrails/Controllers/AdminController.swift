@@ -28,6 +28,7 @@ class AdminController: UserControllerImplementation {
         while isLoggedIn {
             Logger.userLog.log("\(textMenu)")
             
+            // Creates the AdminOption and handles the error
             do {
                 let adminOption = try AdminOption(from: readLine() ?? "")
                 switch adminOption {
@@ -52,6 +53,7 @@ class AdminController: UserControllerImplementation {
     
     private func getUsers() {
         userService.getAll { users in
+            // Creates the full description of each user and handles the error that thrown the role
             do {
                 let usersText = try users.reduce("") {
                     return $0 + (try $1.getDescription()) + "\n"
@@ -73,6 +75,7 @@ class AdminController: UserControllerImplementation {
             Logger.userLog.log("Introduce el nombre del usuario que quieres añadir")
             usernameInput = readLine() ?? ""
             
+            // Validates the username regex pattern
             userService.validate(text: usernameInput, regexPattern: .username) {
                 usernameInput = $0
             } onError: { appError in
@@ -85,6 +88,7 @@ class AdminController: UserControllerImplementation {
             Logger.userLog.log("Introduce el email del usuario que quieres añadir")
             emailInput = readLine() ?? ""
             
+            // Validates the email regex pattern
             userService.validate(text: emailInput, regexPattern: .email) {
                 emailInput = $0
             } onError: { appError in
