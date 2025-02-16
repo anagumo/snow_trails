@@ -7,64 +7,6 @@
 
 import Foundation
 
-protocol MenuImplementation {
-    func getMenu(_ menuType: MenuType)
-}
-
-protocol MenuDelegate {
-    func displayLoginMenu(textMenu: String)
-    func displayUserMenu(textMenu: String)
-    func displayAdminMenu(textMenu: String)
-}
-
-struct Menu: MenuImplementation {
-    var menuDelegate: MenuDelegate?
-    
-    func getMenu(_ menuType: MenuType) {
-        switch menuType {
-        case .login:
-            displayLoginMenu()
-        case .regularUser:
-            displayRegularUserMenu()
-        case .admin:
-            displayAdminMenu()
-        }
-    }
-    
-    func displayLoginMenu() {
-        let textMenu = LoginOption.allCases
-            .enumerated()
-            .reduce("🏔️ Bienvenido a SnowTrails\n") {
-                let (index, option) = $1
-                return $0 + "\(index + 1). \(option.rawValue)\n"
-            }
-        
-        menuDelegate?.displayLoginMenu(textMenu: textMenu)
-    }
-    
-    func displayRegularUserMenu() {
-        let textMenu = RegularUserOption.allCases
-            .enumerated()
-            .reduce("👩🏻‍💻 Menú usuario - Selecciona una opción:\n") {
-                let (index, option) = $1
-                return $0 + "\(index + 1). \(option.rawValue)\n"
-            }
-        
-        menuDelegate?.displayUserMenu(textMenu: textMenu)
-    }
-    
-    func displayAdminMenu() {
-        let textMenu = AdminOption.allCases
-            .enumerated()
-            .reduce("👩🏻‍💼 Menú admin - Selecciona una opción:\n") {
-                let (index, option) = $1
-                return $0 + "\(index + 1). \(option.rawValue)\n"
-            }
-        
-        menuDelegate?.displayAdminMenu(textMenu: textMenu)
-    }
-}
-
 enum MenuType {
     case login
     case regularUser
@@ -73,7 +15,7 @@ enum MenuType {
 
 /// Representation of and option of Login
 ///
-/// - throws: AppError.menu if the input is invalid
+/// - Throws: AppError.menu if the input is invalid
 ///
 /// # Implementation
 /// Use a custom init to handle the user input, throw an error if the input is invalid.
@@ -109,7 +51,7 @@ enum LoginOption: String, CaseIterable {
 
 /// Representation of and option of regular menu
 ///
-/// - throws: AppError.menu if the input is invalid
+/// - Throws: AppError.menu if the input is invalid
 ///
 /// # Implementation
 /// Use a custom init to handle the user input, throw an error if the input is invalid.
@@ -145,7 +87,7 @@ enum RegularUserOption: String, CaseIterable {
 
 /// Representation of and option of admin menu
 ///
-/// - throws: AppError.menu if the input is invalid
+/// - Throws: AppError.menu if the input is invalid
 ///
 /// # Implementation
 /// Use a custom init to handle the user input, throw an error if the input is invalid.

@@ -40,7 +40,7 @@ enum AppError: Error, LocalizedError {
         case .menu:
             return "Error: opción inválida, elige una opción del menú"
         case .login:
-            return "Error: no se pudo iniciar la sesión"
+            return "Error: no se pudo iniciar la sesión, verifica tus datos"
         case .role:
             return "Error: no se pudo obtener el rol del usuario"
         case .username:

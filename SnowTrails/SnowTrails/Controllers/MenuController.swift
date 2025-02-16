@@ -16,7 +16,6 @@ class MenuController: MenuControllerImplementation {
     private var loginController: LoginControllerImplementation
     private var regularUserController: UserControllerImplementation
     private var adminController: UserControllerImplementation
-    private var menu: Menu?
     private var user: User?
     
     init(loginController: LoginControllerImplementation,
@@ -25,11 +24,9 @@ class MenuController: MenuControllerImplementation {
         self.loginController = loginController
         self.regularUserController = regularUserController
         self.adminController = adminController
-        menu = Menu(menuDelegate: self)
     }
     
     deinit {
-        menu = nil
         user = nil
     }
     
@@ -40,17 +37,42 @@ class MenuController: MenuControllerImplementation {
         regularUserController.loginControllerDelegate = self
         adminController.loginControllerDelegate = self
         
-        menu?.getMenu(.login) // The first menu by default is the Login, which is the beginning of the app.
+        generateMenu() // The first menu by default is the Login, which is the beginning of the app.
     }
-}
-
-extension MenuController: MenuDelegate, LoginControllerDelegate {
-    // MARK: Menu Delegate functions
-    func displayLoginMenu(textMenu: String) {
+    
+    // MARK: Menu functions
+    /// Generates a menu
+    /// - Parameter menuType: the selected menu type, as default is .login
+    private func generateMenu(_ menuType: MenuType = .login) {
+        switch menuType {
+        case .login:
+            displayLoginMenu()
+        case .regularUser:
+            displayRegularUserMenu()
+        case .admin:
+            displayAdminMenu()
+        }
+    }
+    
+    private func displayLoginMenu() {
+        let textMenu = LoginOption.allCases
+            .enumerated()
+            .reduce("🏔️ Bienvenido a SnowTrails\n") {
+                let (index, option) = $1
+                return $0 + "\(index + 1). \(option.rawValue)\n"
+            }
+        
         loginController.open(textMenu: textMenu)
     }
     
-    func displayUserMenu(textMenu: String) {
+    private func displayRegularUserMenu() {
+        let textMenu = RegularUserOption.allCases
+            .enumerated()
+            .reduce("👩🏻‍💻 Menú usuario - Selecciona una opción:\n") {
+                let (index, option) = $1
+                return $0 + "\(index + 1). \(option.rawValue)\n"
+            }
+        
         guard let user else {
             Logger.developerLog.error("Error: ocurrió un error al guardar el usuario")
             return
@@ -58,14 +80,23 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
         regularUserController.open(textMenu: textMenu, user: user)
     }
     
-    func displayAdminMenu(textMenu: String) {
+    private func displayAdminMenu() {
+        let textMenu = AdminOption.allCases
+            .enumerated()
+            .reduce("👩🏻‍💼 Menú admin - Selecciona una opción:\n") {
+                let (index, option) = $1
+                return $0 + "\(index + 1). \(option.rawValue)\n"
+            }
+        
         guard let user else {
             Logger.developerLog.error("Error: ocurrió un error al guardar el usuario")
             return
         }
         adminController.open(textMenu: textMenu, user: user)
     }
-    
+}
+
+extension MenuController: LoginControllerDelegate {
     // MARK: Login Delegate functions
     func onLoginSuccess(user: User) {
         self.user = user // I need to set the user globally so it can be accessed in other controllers
@@ -73,9 +104,9 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
         // Given the user's rol I trigger the rigth menu
         switch user.role {
         case .regular:
-            menu?.getMenu(.regularUser)
+            generateMenu(.regularUser)
         case .admin:
-            menu?.getMenu(.admin)
+            generateMenu(.admin)
         default:
             Logger.developerLog.error("Error: ocurrió un error al obtener el rol del usuario")
         }
@@ -85,6 +116,6 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     func onLogoutSuccess() {
         user = nil
         loginController.quitLogin = false // Reset the data of LoginController to prevent the app from closing
-        menu?.getMenu(.login)
+        generateMenu(.login)
     }
 }
