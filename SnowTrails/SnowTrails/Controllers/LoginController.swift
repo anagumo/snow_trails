@@ -8,16 +8,17 @@
 import Foundation
 import OSLog
 
-protocol LoginControllerImplementation {
-    func open(textMenu: String)
-    var loginControllerDelegate: LoginControllerDelegate? { get set }
-    var quitLogin: Bool { get set }
-}
 
 // User controllers shares this protocol
 protocol LoginControllerDelegate: AnyObject { // The compiler requieres this protocol (?)
     func onLoginSuccess(user: User)
     func onLogoutSuccess()
+}
+
+protocol LoginControllerImplementation {
+    func open(textMenu: String)
+    var loginControllerDelegate: LoginControllerDelegate? { get set }
+    var quitLogin: Bool { get set }
 }
 
 class LoginController: LoginControllerImplementation {
@@ -40,9 +41,9 @@ class LoginController: LoginControllerImplementation {
             do {
                 let loginOption = try LoginOption(from: readLine() ?? "")
                 switch loginOption {
-                case .LoginUser, .LoginAdmin:
+                case .loginUser, .loginAdmin:
                     login()
-                case .Quit:
+                case .quit:
                     quitLogin = true
                 }
             } catch let error as AppError {

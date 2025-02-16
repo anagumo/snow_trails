@@ -10,7 +10,7 @@ import Foundation
 class App {
     private var menuController: MenuControllerImplementation
     
-    // App has the responsability of create all instances used in the app
+    // App has the responsability of handle all dependencies used around the app
     init() {
         let userDataLoader = UserDataLoader()
         let loginService = LoginService(userDataLoader: userDataLoader)

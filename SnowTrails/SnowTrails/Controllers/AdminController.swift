@@ -31,15 +31,15 @@ class AdminController: UserControllerImplementation {
             do {
                 let adminOption = try AdminOption(from: readLine() ?? "")
                 switch adminOption {
-                case .Users:
+                case .users:
                     getUsers()
-                case .AddUser:
+                case .addUser:
                     addUser()
-                case .DeleteUser:
+                case .deleteUser:
                     deleteUser()
-                case .AddPointToRoute:
+                case .addPointToRoute:
                     Logger.userLog.warning("Esta funcionalidad no está implementada")
-                case .Logout:
+                case .logout:
                     logout(userId: user.id)
                 }
             } catch let error as AppError {

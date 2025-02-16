@@ -35,12 +35,12 @@ class MenuController: MenuControllerImplementation {
     
     // MARK: Main
     func open() {
-        // I set MenuController as delegate of these controllers to comunicate back some states
+        // I set MenuController as delegate of these controllers to comunicate back when user closes it sesion
         loginController.loginControllerDelegate = self
         regularUserController.loginControllerDelegate = self
         adminController.loginControllerDelegate = self
         
-        menu?.getMenu(.Login) // The first menu by default is the Login, which is the beginning of the app.
+        menu?.getMenu(.login) // The first menu by default is the Login, which is the beginning of the app.
     }
 }
 
@@ -68,13 +68,14 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     
     // MARK: Login Delegate functions
     func onLoginSuccess(user: User) {
-        self.user = user
+        self.user = user // I need to set the user globally so it can be accessed in other controllers
         
+        // Given the user's rol I trigger the rigth menu
         switch user.role {
         case .regular:
-            menu?.getMenu(.RegularUser)
+            menu?.getMenu(.regularUser)
         case .admin:
-            menu?.getMenu(.Admin)
+            menu?.getMenu(.admin)
         default:
             Logger.developerLog.error("Error: ocurrió un error al obtener el rol del usuario")
         }
@@ -83,7 +84,7 @@ extension MenuController: MenuDelegate, LoginControllerDelegate {
     // MARK: User Delegate functions
     func onLogoutSuccess() {
         user = nil
-        loginController.quitLogin = false
-        menu?.getMenu(.Login)
+        loginController.quitLogin = false // Reset the data of LoginController to prevent the app from closing
+        menu?.getMenu(.login)
     }
 }

@@ -22,11 +22,11 @@ struct Menu: MenuImplementation {
     
     func getMenu(_ menuType: MenuType) {
         switch menuType {
-        case .Login:
+        case .login:
             displayLoginMenu()
-        case .RegularUser:
+        case .regularUser:
             displayRegularUserMenu()
-        case .Admin:
+        case .admin:
             displayAdminMenu()
         }
     }
@@ -66,68 +66,118 @@ struct Menu: MenuImplementation {
 }
 
 enum MenuType {
-    case Login
-    case RegularUser
-    case Admin
+    case login
+    case regularUser
+    case admin
 }
 
+/// Representation of and option of Login
+///
+/// - throws: AppError.menu if the input is invalid
+///
+/// # Implementation
+/// Use a custom init to handle the user input, throw an error if the input is invalid.
+///
+/// Usage:
+///```swift
+///let loginOption = LoginOption("1")
+///print(option)
+///```
+///
+///Output:
+///```
+///Optional(SnowTrails.LoginOption.loginUser)
+///```
 enum LoginOption: String, CaseIterable {
-    case LoginUser = "Acceder como usuario"
-    case LoginAdmin = "Acceder como administrador"
-    case Quit = "Salir"
+    case loginUser = "Acceder como usuario"
+    case loginAdmin = "Acceder como administrador"
+    case quit = "Salir"
     
     init(from input: String) throws {
         switch input {
         case "1":
-            self = .LoginUser
+            self = .loginUser
         case "2":
-            self = .LoginAdmin
+            self = .loginAdmin
         case "3":
-            self = .Quit
+            self = .quit
         default:
             throw AppError.menu
         }
     }
 }
 
+/// Representation of and option of regular menu
+///
+/// - throws: AppError.menu if the input is invalid
+///
+/// # Implementation
+/// Use a custom init to handle the user input, throw an error if the input is invalid.
+///
+/// Usage:
+///```swift
+///let regularUserOption = RegularUserOption("3")
+///print(option)
+///```
+///
+///Output:
+///```
+///Optional(SnowTrails.RegularUserOption.logout)
+///```
 enum RegularUserOption: String, CaseIterable {
-    case Routes = "Ver todas las rutas"
-    case ShortRoute = "Obtener la ruta más corta entre dos puntos"
-    case Logout = "Cerrar sesión"
+    case routes = "Ver todas las rutas"
+    case shortRoute = "Obtener la ruta más corta entre dos puntos"
+    case logout = "Cerrar sesión"
     
     init(from input: String) throws {
         switch input {
         case "1":
-            self = .Routes
+            self = .routes
         case "2":
-            self = .ShortRoute
+            self = .shortRoute
         case "3":
-            self = .Logout
+            self = .logout
         default:
             throw AppError.menu
         }
     }
 }
 
+/// Representation of and option of admin menu
+///
+/// - throws: AppError.menu if the input is invalid
+///
+/// # Implementation
+/// Use a custom init to handle the user input, throw an error if the input is invalid.
+///
+/// Usage:
+///```adminOption("3")
+///print(option)
+///```
+///
+///Output:
+///```
+///Optional(SnowTrails.AdminOption.deleteUser)
+///```
 enum AdminOption: String, CaseIterable {
-    case Users = "Ver todos los usuarios"
-    case AddUser = "Añadir usuario"
-    case DeleteUser = "Eliminar usuario"
-    case AddPointToRoute = "Añadir punto a ruta"
-    case Logout = "Cerrar sesión"
+    case users = "Ver todos los usuarios"
+    case addUser = "Añadir usuario"
+    case deleteUser = "Eliminar usuario"
+    case addPointToRoute = "Añadir punto a ruta"
+    case logout = "Cerrar sesión"
     
     init(from input: String) throws {
         switch input {
         case "1":
-            self = .Users
+            self = .users
         case "2":
-            self = .AddUser
+            self = .addUser
         case "3":
-            self = .DeleteUser
+            self = .deleteUser
         case "4":
-            self = .AddPointToRoute
+            self = .addPointToRoute
         case "5":
-            self = .Logout
+            self = .logout
         default:
             throw AppError.menu
         }

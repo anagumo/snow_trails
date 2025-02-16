@@ -37,11 +37,11 @@ class RegularUserController: UserControllerImplementation {
             do {
                 let regularUserOption = try RegularUserOption(from: readLine() ?? "")
                 switch regularUserOption {
-                case .Routes:
+                case .routes:
                     routesController.getRoutes()
-                case .ShortRoute:
+                case .shortRoute:
                     Logger.userLog.warning("Esta funcionalidad no está implementada")
-                case .Logout:
+                case .logout:
                     logout(userId: user.id)
                 }
             } catch let error as AppError {
